@@ -22,10 +22,11 @@ function bindEvents() {
   socket.on('gameOver', gameOver);
   socket.on('error', error );
 
-  emitter.on('host/hostCreateNewGame', hostCreateNewGame );
+  emitter.on('view/hostCreateNewGame', hostCreateNewGame );
   emitter.on('host/hostRoomFull', hostRoomFull );
   emitter.on('host/hostCountdownFinished', hostCountdownFinished );
   emitter.on('host/hostNextRound', hostNextRound );
+
   emitter.on('player/playerJoinGame', playerJoinGame );
   emitter.on('player/playerAnswer', playerAnswer );
   emitter.on('player/playerRestart', playerRestart );

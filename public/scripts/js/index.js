@@ -6,7 +6,7 @@ require('./io').init({
    emitter: emitter
 });
 
-require('./view').init({
+require('./views').init({
    emitter: emitter
 });
 

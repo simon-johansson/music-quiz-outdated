@@ -301,506 +301,207 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.js":[function(require,module,exports){
+},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.coffee":[function(require,module,exports){
+var App, audio, countdown;
 
-var countdown = require('./components/countdown');
-var textfit = require('./components/textfit');
-var audio = require('./components/audio');
+countdown = require('./components/countdown.coffee');
 
-var Views = require('./components/templates');
+audio = require('./components/audio.coffee');
 
-var App = {
-
-    gameId: 0,
-    myRole: '', // 'Player' or 'Host'
-    mySocketId: '',
-    currentRound: 0,
-    emitter: '',
-
-    init: function(data) {
-        App.emitter = data.emitter;
-
-        App.cacheElements();
-        App.showInitScreen();
-        App.bindDOMEvents();
-        App.bindEmitterEvents();
-
-        // Initialize the fastclick library
-        FastClick.attach(document.body);
+App = {
+  gameId: 0,
+  myRole: '',
+  mySocketId: '',
+  currentRound: 0,
+  emitter: '',
+  init: function(data) {
+    App.emitter = data.emitter;
+    return App.bindEmitterEvents();
+  },
+  bindEmitterEvents: function() {
+    return App.emitter.on('io/connected', App.setSocketID).on('io/beginNewGame', function(data) {
+      return App[App.myRole].gameCountdown(data);
+    }).on('io/onNewWordData', function(data) {
+      App.currentRound = data.round;
+      return App[App.myRole].newWord(data);
+    }).on('io/gameOver', function(data) {
+      return App[App.myRole].endGame(data);
+    }).on('io/newGameCreated', function(data) {
+      return App.Host.gameInit(data);
+    }).on('io/hostCheckAnswer', function(data) {
+      if (App.myRole === 'Host') {
+        return App.Host.checkAnswer(data);
+      }
+    }).on('io/playerJoinedRoom', function(data) {
+      return App[App.myRole].updateWaitingScreen(data);
+    }).on('view/playerAnswer', App.Player.onPlayerAnswer).on('view/playerRestart', App.Player.onPlayerRestart);
+  },
+  setSocketID: function(id) {
+    return App.mySocketId = id;
+  },
+  Host: {
+    players: [],
+    isNewGame: false,
+    numPlayersInRoom: 0,
+    currentCorrectAnswer: '',
+    gameInit: function(data) {
+      App.gameId = data.gameId;
+      App.mySocketId = data.mySocketId;
+      App.myRole = 'Host';
+      App.Host.numPlayersInRoom = 0;
+      return App.emitter.emit('host/displayNewGameScreen', App.gameId);
     },
-
-    cacheElements: function() {
-        App.$doc = $(document);
-
-        // Templates
-        // App.$gameArea = $('#gameArea');
-        // App.$templateIntroScreen = $('#intro-screen-template').html();
-        // App.$templateNewGame = $('#create-game-template').html();
-        // App.$templateJoinGame = $('#join-game-template').html();
-        // App.$hostGame = $('#host-game-template').html();
+    updateWaitingScreen: function(data) {
+      if (App.Host.isNewGame) {
+        App.emitter.emit('host/displayNewGameScreen', App.gameId);
+      }
+      App.emitter.emit('host/playerJoinedRoom', data.playerName);
+      App.Host.players.push(data);
+      App.Host.numPlayersInRoom += 1;
+      if (App.Host.numPlayersInRoom === 2) {
+        return App.emitter.emit('host/hostRoomFull', App.gameId);
+      }
     },
-
-    bindDOMEvents: function() {
-        // Host
-        App.$doc
-          .on('click', '#btnCreateGame', App.Host.onCreateClick);
-
-        // Player
-        App.$doc
-          .on('click', '#btnJoinGame', App.Player.onJoinClick)
-          .on('click', '#btnStart', App.Player.onPlayerStartClick)
-          .on('click', '.btnAnswer', App.Player.onPlayerAnswerClick)
-          .on('click', '#btnPlayerRestart', App.Player.onPlayerRestart);
+    gameCountdown: function() {
+      App.emitter.emit('host/gameCountdown', App.Host.players);
+      return countdown(false, 5, function() {
+        return App.emitter.emit('host/hostCountdownFinished', App.gameId);
+      });
     },
-
-    bindEmitterEvents: function () {
-      App.emitter
-        .on('io/connected', function(sessionid) {
-          App.mySocketId = sessionid;
-        })
-        .on('io/playerJoinedRoom', function(data) {
-          App[App.myRole].updateWaitingScreen(data);
-        })
-        .on('io/beginNewGame', function(data) {
-          App[App.myRole].gameCountdown(data);
-        })
-        .on('io/onNewWordData', function(data) {
-          App.currentRound = data.round;
-          App[App.myRole].newWord(data);
-        })
-        .on('io/gameOver', function(data) {
-          App[App.myRole].endGame(data);
-        })
-        .on('io/newGameCreated', function(data) {
-          App.Host.gameInit(data);
-        })
-        .on('io/hostCheckAnswer', function(data) {
-          if(App.myRole === 'Host') {
-            App.Host.checkAnswer(data);
-          }
-        });
+    newWord: function(data) {
+      App.emitter.emit('host/newWord', data.word);
+      audio.play(data.audio);
+      App.Host.currentCorrectAnswer = data.answer;
+      return App.Host.currentRound = data.round;
     },
-
-    showInitScreen: function() {
-        temp.$gameArea.html(App.$templateIntroScreen);
-        textfit('.title');
-    },
-
-
-    /* *******************************
-     *         HOST CODE           *
-     ******************************* */
-    Host: {
-
-        players: [],
-        isNewGame: false,
-        numPlayersInRoom: 0,
-        currentCorrectAnswer: '',
-
-        onCreateClick: function() {
-            // console.log('Clicked "Create A Game"');
-            App.emitter.emit('host/hostCreateNewGame');
-            // IO.socket.emit('hostCreateNewGame');
-        },
-
-        gameInit: function(data) {
-            App.gameId = data.gameId;
-            App.mySocketId = data.mySocketId;
-            App.myRole = 'Host';
-            App.Host.numPlayersInRoom = 0;
-
-            App.Host.displayNewGameScreen();
-            // console.log("Game started with ID: " + App.gameId + ' by host: ' + App.mySocketId);
-        },
-
-        displayNewGameScreen: function() {
-            // Fill the game screen with the appropriate HTML
-            App.$gameArea.html(App.$templateNewGame);
-
-            // Display the URL on screen
-            $('#gameURL').text(window.location.href);
-            textfit('#gameURL');
-
-            // Show the gameId / room id on screen
-            $('#spanNewGameCode').text(App.gameId);
-        },
-
-        /**
-         * Update the Host screen when the first player joins
-         * @param data{{playerName: string}}
-         */
-        updateWaitingScreen: function(data) {
-            // If this is a restarted game, show the screen.
-            if (App.Host.isNewGame) {
-                App.Host.displayNewGameScreen();
-            }
-            // Update host screen
-            $('#playersWaiting')
-                .append('<p/>')
-                .text('Player ' + data.playerName + ' joined the game.');
-
-            // Store the new player's data on the Host.
-            App.Host.players.push(data);
-
-            // Increment the number of players in the room
-            App.Host.numPlayersInRoom += 1;
-
-            // If two players have joined, start the game!
-            if (App.Host.numPlayersInRoom === 2) {
-                // console.log('Room is full. Almost ready!');
-
-                // Let the server know that two players are present.
-                App.emitter.emit('host/hostRoomFull', App.gameId);
-                // IO.socket.emit('hostRoomFull', App.gameId);
-            }
-        },
-
-        /**
-         * Show the countdown screen
-         */
-        gameCountdown: function() {
-
-            // Prepare the game screen with new HTML
-            App.$gameArea.html(App.$hostGame);
-            textfit('#hostWord');
-
-            // Begin the on-screen countdown timer
-            var $secondsLeft = $('#hostWord');
-            countdown($secondsLeft, 5, function() {
-              App.emitter.emit('host/hostCountdownFinished', App.gameId);
-              // IO.socket.emit('hostCountdownFinished', App.gameId);
-            });
-
-            // Display the players' names on screen
-            $('#player1Score')
-                .find('.playerName')
-                .html(App.Host.players[0].playerName);
-
-            $('#player2Score')
-                .find('.playerName')
-                .html(App.Host.players[1].playerName);
-
-            // Set the Score section on screen to 0 for each player.
-            $('#player1Score').find('.score').attr('id', App.Host.players[0].mySocketId);
-            $('#player2Score').find('.score').attr('id', App.Host.players[1].mySocketId);
-        },
-
-        /**
-         * Show the word for the current round on screen.
-         * @param data{{round: *, word: *, answer: *, list: Array}}
-         */
-        newWord: function(data) {
-            // Insert the new word into the DOM
-            $('#hostWord').text(data.word);
-            textfit('#hostWord');
-            audio.play(data.audio);
-
-            // Update the data for the current round
-            App.Host.currentCorrectAnswer = data.answer;
-            App.Host.currentRound = data.round;
-        },
-
-        /**
-         * Check the answer clicked by a player.
-         * @param data{{round: *, playerId: *, answer: *, gameId: *}}
-         */
-        checkAnswer: function(data) {
-            // Verify that the answer clicked is from the current round.
-            // This prevents a 'late entry' from a player whos screen has not
-            // yet updated to the current round.
-            if (data.round === App.currentRound) {
-
-                // Get the player's score
-                var $pScore = $('#' + data.playerId);
-
-                // Advance player's score if it is correct
-                if (App.Host.currentCorrectAnswer === data.answer) {
-                    // Add 5 to the player's score
-                    $pScore.text(+$pScore.text() + 5);
-                    audio.stop();
-
-                    // Advance the round
-                    App.currentRound += 1;
-
-                    // Prepare data to send to the server
-                    var data = {
-                        gameId: App.gameId,
-                        round: App.currentRound
-                    };
-
-                    // Notify the server to start the next round.
-                    App.emitter.emit('host/hostNextRound', data);
-                    // IO.socket.emit('hostNextRound', data);
-
-                } else {
-                    // A wrong answer was submitted, so decrement the player's score.
-                    $pScore.text(+$pScore.text() - 3);
-                }
-            }
-        },
-
-
-        /**
-         * All 10 rounds have played out. End the game.
-         * @param data
-         */
-        endGame: function(data) {
-            // Get the data for player 1 from the host screen
-            var $p1 = $('#player1Score');
-            var p1Score = +$p1.find('.score').text();
-            var p1Name = $p1.find('.playerName').text();
-
-            // Get the data for player 2 from the host screen
-            var $p2 = $('#player2Score');
-            var p2Score = +$p2.find('.score').text();
-            var p2Name = $p2.find('.playerName').text();
-
-            // Find the winner based on the scores
-            var winner = (p1Score < p2Score) ? p2Name : p1Name;
-            var tie = (p1Score === p2Score);
-
-            // Display the winner (or tie game message)
-            if (tie) {
-                $('#hostWord').text("It's a Tie!");
-            } else {
-                $('#hostWord').text(winner + ' Wins!!');
-            }
-            textfit('#hostWord');
-
-            // Reset game data
-            App.Host.numPlayersInRoom = 0;
-            App.Host.isNewGame = true;
-        },
-
-        /**
-         * A player hit the 'Start Again' button after the end of a game.
-         */
-        restartGame: function() {
-            App.$gameArea.html(App.$templateNewGame);
-            $('#spanNewGameCode').text(App.gameId);
+    checkAnswer: function(data) {
+      var $pScore;
+      if (data.round === App.currentRound) {
+        $pScore = $('#' + data.playerId);
+        if (App.Host.currentCorrectAnswer === data.answer) {
+          $pScore.text(+$pScore.text() + 5);
+          audio.stop();
+          App.currentRound += 1;
+          data = {
+            gameId: App.gameId,
+            round: App.currentRound
+          };
+          return App.emitter.emit('host/hostNextRound', data);
+        } else {
+          return $pScore.text + $pScore.text() - 3;
         }
+      }
     },
-
-
-    /* *****************************
-     *        PLAYER CODE        *
-     ***************************** */
-
-    Player: {
-
-        hostSocketId: '',
-        myName: '',
-
-        onJoinClick: function() {
-            // console.log('Clicked "Join A Game"');
-
-            // Display the Join Game HTML on the player's screen.
-            App.$gameArea.html(App.$templateJoinGame);
-        },
-
-        /**
-         * The player entered their name and gameId (hopefully)
-         * and clicked Start.
-         */
-        onPlayerStartClick: function() {
-            // console.log('Player clicked "Start"');
-
-            // collect data to send to the server
-            var data = {
-                gameId: +($('#inputGameId').val()),
-                playerName: $('#inputPlayerName').val() || 'anon'
-            };
-
-            // Send the gameId and playerName to the server
-            App.emitter.emit('player/playerJoinGame', data);
-            // IO.socket.emit('playerJoinGame', data);
-
-            // Set the appropriate properties for the current player.
-            App.myRole = 'Player';
-            App.Player.myName = data.playerName;
-        },
-
-        /**
-         *  Click handler for the Player hitting a word in the word list.
-         */
-        onPlayerAnswerClick: function() {
-            // console.log('Clicked Answer Button');
-            var $btn = $(this); // the tapped button
-            var answer = $btn.val(); // The tapped word
-
-            // Send the player info and tapped word to the server so
-            // the host can check the answer.
-            var data = {
-                gameId: App.gameId,
-                playerId: App.mySocketId,
-                answer: answer,
-                round: App.currentRound
-            };
-            App.emitter.emit('player/playerAnswer', data);
-            // IO.socket.emit('playerAnswer', data);
-        },
-
-        /**
-         *  Click handler for the "Start Again" button that appears
-         *  when a game is over.
-         */
-        onPlayerRestart: function() {
-            var data = {
-                gameId: App.gameId,
-                playerName: App.Player.myName
-            };
-            App.emitter.emit('player/playerRestart', data);
-            // IO.socket.emit('playerRestart', data);
-            App.currentRound = 0;
-            $('#gameArea').html("<h3>Waiting on host to start new game.</h3>");
-        },
-
-        /**
-         * Display the waiting screen for player 1
-         * @param data
-         */
-        updateWaitingScreen: function(data) {
-            if (true /*IO.socket.socket.sessionid === data.mySocketId*/) {
-                App.myRole = 'Player';
-                App.gameId = data.gameId;
-
-                $('#playerWaitingMessage')
-                    .append('<p/>')
-                    .text('Joined Game ' + data.gameId + '. Please wait for game to begin.');
-            }
-        },
-
-        /**
-         * Display 'Get Ready' while the countdown timer ticks down.
-         * @param hostData
-         */
-        gameCountdown: function(hostData) {
-            App.Player.hostSocketId = hostData.mySocketId;
-            $('#gameArea')
-                .html('<div class="gameOver">Get Ready!</div>');
-        },
-
-        /**
-         * Show the list of words for the current round.
-         * @param data{{round: *, word: *, answer: *, list: Array}}
-         */
-        newWord: function(data) {
-            // Create an unordered list element
-            var $list = $('<ul/>').attr('id', 'ulAnswers');
-
-            // Insert a list item for each word in the word list
-            // received from the server.
-            $.each(data.list, function() {
-                $list //  <ul> </ul>
-                    .append($('<li/>') //  <ul> <li> </li> </ul>
-                    .append($('<button/>') //  <ul> <li> <button> </button> </li> </ul>
-                        .addClass('btnAnswer') //  <ul> <li> <button class='btnAnswer'> </button> </li> </ul>
-                        .addClass('btn') //  <ul> <li> <button class='btnAnswer'> </button> </li> </ul>
-                        .val(this) //  <ul> <li> <button class='btnAnswer' value='word'> </button> </li> </ul>
-                        .html(this) //  <ul> <li> <button class='btnAnswer' value='word'>word</button> </li> </ul>
-                    )
-                );
-            });
-
-            // Insert the list onto the screen.
-            $('#gameArea').html($list);
-        },
-
-        /**
-         * Show the "Game Over" screen.
-         */
-        endGame: function() {
-            $('#gameArea')
-                .html('<div class="gameOver">Game Over!</div>')
-                .append(
-                    // Create a button to start a new game.
-                    $('<button>Start Again</button>')
-                    .attr('id', 'btnPlayerRestart')
-                    .addClass('btn')
-                    .addClass('btnGameOver')
-                );
-        }
+    endGame: function(data) {
+      App.emitter.emit('host/endGame', data);
+      App.Host.numPlayersInRoom = 0;
+      return App.Host.isNewGame = true;
     },
-
+    restartGame: function() {
+      App.$gameArea.html(App.$templateNewGame);
+      return $('#spanNewGameCode').text(App.gameId);
+    }
+  },
+  Player: {
+    hostSocketId: '',
+    myName: '',
+    onPlayerStart: function(data) {
+      App.myRole = 'Player';
+      App.Player.myName = data.playerName;
+      return App.emitter.emit('player/playerJoinedRoom', data.gameId);
+    },
+    onPlayerAnswer: function(answer) {
+      var data;
+      data = {
+        gameId: App.gameId,
+        playerId: App.mySocketId,
+        answer: answer,
+        round: App.currentRound
+      };
+      return App.emitter.emit('player/playerAnswer', data);
+    },
+    onPlayerRestart: function() {
+      var data;
+      data = {
+        gameId: App.gameId,
+        playerName: App.Player.myName
+      };
+      App.currentRound = 0;
+      return App.emitter.emit('player/playerRestart', data);
+    },
+    updateWaitingScreen: function(data) {
+      if (true) {
+        App.myRole = 'Player';
+        App.gameId = data.gameId;
+        return App.emitter.emit('player/playerJoinedRoom', App.gameId);
+      }
+    },
+    gameCountdown: function(hostData) {
+      App.Player.hostSocketId = hostData.mySocketId;
+      return App.emitter.emit('player/gameCountdown');
+    },
+    newWord: function(data) {
+      return App.emitter.emit('player/newWord', data.list);
+    },
+    endGame: function() {
+      return App.emitter.emit('player/endGame');
+    }
+  }
 };
 
 module.exports = {
-  init: App.init,
+  init: App.init
 };
 
-},{"./components/audio":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/audio.js","./components/countdown":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/countdown.js","./components/templates":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/templates.js","./components/textfit":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.js"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/audio.js":[function(require,module,exports){
 
-var audio = new Audio();
 
-function play(track) {
+},{"./components/audio.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/audio.coffee","./components/countdown.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/countdown.coffee"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/audio.coffee":[function(require,module,exports){
+var audio, play, stop;
+
+audio = new Audio;
+
+play = function(track) {
   audio.src = track;
-  audio.play();
-}
+  return audio.play();
+};
 
-function stop(track) {
+stop = function(track) {
   audio.pause();
-  audio.currentTime = 0;
-}
+  return audio.currentTime = 0;
+};
 
 module.exports = {
   play: play,
-  stop: stop,
+  stop: stop
 };
 
-},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/countdown.js":[function(require,module,exports){
 
-var textfit = require('./textfit');
 
-/**
- * Display the countdown timer on the Host screen
- *
- * @param $el The container element for the countdown timer
- * @param startTime
- * @param callback The function to call when the timer ends.
- */
+},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/countdown.coffee":[function(require,module,exports){
+var textfit;
 
- module.exports = function( $el, startTime, callback) {
+textfit = require('./textfit.coffee');
 
-    // Display the starting time on the screen.
+module.exports = function($el, startTime, callback) {
+  var countItDown, timer;
+  countItDown = function() {
+    startTime -= 1;
     $el.text(startTime);
     textfit('#hostWord');
-
-    // console.log('Starting Countdown...');
-
-    // Start a 1 second timer
-    var timer = setInterval(countItDown, 1000);
-
-    // Decrement the displayed timer value on each 'tick'
-    function countItDown(){
-        startTime -= 1
-        $el.text(startTime);
-        textfit('#hostWord');
-
-        if( startTime <= 0 ){
-            // console.log('Countdown Finished.');
-
-            // Stop the timer and do the callback.
-            clearInterval(timer);
-            callback();
-            return;
-        }
+    if (startTime <= 0) {
+      clearInterval(timer);
+      return callback();
     }
-
+  };
+  $el = $el || $('#hostWord');
+  $el.text(startTime);
+  textfit('#hostWord');
+  return timer = setInterval(countItDown, 1000);
 };
 
-},{"./textfit":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.js"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/templates.js":[function(require,module,exports){
 
-var templates = {};
 
-templates.$gameArea = $('#gameArea');
-templates.$templateIntroScreen = $('#intro-screen-template').html();
-templates.$templateNewGame = $('#create-game-template').html();
-templates.$templateJoinGame = $('#join-game-template').html();
-templates.$hostGame = $('#host-game-template').html();
-
-module.exports = templates;
-
-},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.js":[function(require,module,exports){
+},{"./textfit.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.coffee"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/js/textfit.js":[function(require,module,exports){
 /**
  * Make the text inside the given element as big as possible
  * See: https://github.com/STRML/textFit
@@ -820,113 +521,331 @@ module.exports = templates;
     );
 };
 
-},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/index.js":[function(require,module,exports){
-
-var EventEmitter = require('events').EventEmitter;
-var emitter = new EventEmitter();
-
-require('./io').init({
-   emitter: emitter
-});
-
-require('./app').init({
-   emitter: emitter
-});
-
-// require('./original');
-
-},{"./app":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.js","./io":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.js","events":"/Users/sijo/Projects/personal/spotify-quiz/quizify/node_modules/browserify/node_modules/events/events.js"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.js":[function(require,module,exports){
-
-module.exports = {
-  init: init,
+},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.coffee":[function(require,module,exports){
+module.exports = function(el) {
+  return textFit($(el)[0], {
+    alignHoriz: true,
+    alignVert: false,
+    widthOnly: true,
+    reProcess: true,
+    maxFontSize: 180
+  });
 };
 
-var socket = "";
-var emitter = "";
 
-function init(data) {
+
+},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/index.coffee":[function(require,module,exports){
+var EventEmitter, emitter;
+
+EventEmitter = require('events').EventEmitter;
+
+emitter = new EventEmitter;
+
+require('./io.coffee').init({
+  emitter: emitter
+});
+
+require('./views.js').init({
+  emitter: emitter
+});
+
+require('./app.coffee').init({
+  emitter: emitter
+});
+
+FastClick.attach(document.body);
+
+
+
+},{"./app.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.coffee","./io.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.coffee","./views.js":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views.js","events":"/Users/sijo/Projects/personal/spotify-quiz/quizify/node_modules/browserify/node_modules/events/events.js"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.coffee":[function(require,module,exports){
+var beginNewGame, bindEvents, emitter, error, gameOver, hostCheckAnswer, hostCountdownFinished, hostCreateNewGame, hostNextRound, hostRoomFull, init, onConnected, onNewGameCreated, onNewWordData, playerAnswer, playerJoinGame, playerJoinedRoom, playerRestart, socket;
+
+socket = '';
+
+emitter = '';
+
+init = function(data) {
   socket = io.connect();
   emitter = data.emitter;
-  bindEvents();
-}
+  return bindEvents();
+};
 
-function bindEvents() {
-  socket.on('connected', onConnected );
-  socket.on('newGameCreated', onNewGameCreated );
-  socket.on('playerJoinedRoom', playerJoinedRoom );
-  socket.on('beginNewGame', beginNewGame );
+bindEvents = function() {
+  socket.on('connected', onConnected);
+  socket.on('newGameCreated', onNewGameCreated);
+  socket.on('playerJoinedRoom', playerJoinedRoom);
+  socket.on('beginNewGame', beginNewGame);
   socket.on('newWordData', onNewWordData);
   socket.on('hostCheckAnswer', hostCheckAnswer);
   socket.on('gameOver', gameOver);
-  socket.on('error', error );
+  socket.on('error', error);
+  emitter.on('view/hostCreateNewGame', hostCreateNewGame);
+  emitter.on('view/playerJoinGame', playerJoinGame);
+  emitter.on('host/hostRoomFull', hostRoomFull);
+  emitter.on('host/hostCountdownFinished', hostCountdownFinished);
+  emitter.on('host/hostNextRound', hostNextRound);
+  emitter.on('player/playerAnswer', playerAnswer);
+  return emitter.on('player/playerRestart', playerRestart);
+};
 
-  emitter.on('host/hostCreateNewGame', hostCreateNewGame );
-  emitter.on('host/hostRoomFull', hostRoomFull );
-  emitter.on('host/hostCountdownFinished', hostCountdownFinished );
-  emitter.on('host/hostNextRound', hostNextRound );
-  emitter.on('player/playerJoinGame', playerJoinGame );
-  emitter.on('player/playerAnswer', playerAnswer );
-  emitter.on('player/playerRestart', playerRestart );
+playerRestart = function(data) {
+  return socket.emit('playerRestart', data);
+};
+
+playerAnswer = function(data) {
+  return socket.emit('playerAnswer', data);
+};
+
+playerJoinGame = function(data) {
+  return socket.emit('playerJoinGame', data);
+};
+
+hostNextRound = function(data) {
+  return socket.emit('hostNextRound', data);
+};
+
+hostCountdownFinished = function(gameId) {
+  return socket.emit('hostCountdownFinished', gameId);
+};
+
+hostRoomFull = function(gameId) {
+  return socket.emit('hostRoomFull', gameId);
+};
+
+hostCreateNewGame = function() {
+  return socket.emit('hostCreateNewGame');
+};
+
+onConnected = function() {
+  return emitter.emit('io/connected', socket.socket.sessionid);
+};
+
+onNewGameCreated = function(data) {
+  return emitter.emit('io/newGameCreated', data);
+};
+
+playerJoinedRoom = function(data) {
+  return emitter.emit('io/playerJoinedRoom', data);
+};
+
+beginNewGame = function(data) {
+  return emitter.emit('io/beginNewGame', data);
+};
+
+onNewWordData = function(data) {
+  return emitter.emit('io/onNewWordData', data);
+};
+
+hostCheckAnswer = function(data) {
+  return emitter.emit('io/hostCheckAnswer', data);
+};
+
+gameOver = function(data) {
+  return emitter.emit('io/gameOver', data);
+};
+
+error = function(data) {
+  return alert(data.message);
+};
+
+module.exports = {
+  init: init
+};
+
+
+
+},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views.js":[function(require,module,exports){
+
+var textfit = require('./components/js/textfit.js');
+
+module.exports = {
+  init: init
+};
+
+var $el = {};
+var emitter = '';
+
+function init (data) {
+  emitter = data.emitter;
+
+  cacheElements();
+  bindDOMEvents();
+  bindEmitterEvents();
+
+  showInitScreen();
 }
 
-function playerRestart(data) {
-  socket.emit('playerRestart', data);
+function cacheElements () {
+  $el.doc = $(document);
+  $el.gameArea = $('#gameArea');
+  $el.templateIntroScreen = $('#intro-screen-template').html();
+  $el.templateNewGame = $('#create-game-template').html();
+  $el.templateJoinGame = $('#join-game-template').html();
+  $el.hostGame = $('#host-game-template').html();
 }
 
-function playerAnswer(data) {
-  socket.emit('playerAnswer', data);
+function bindDOMEvents () {
+  $el.doc
+    .on('click', '#btnCreateGame', onCreateClick)
+    .on('click', '#btnJoinGame', onJoinClick)
+    .on('click', '#btnStart', onPlayerStartClick)
+    .on('click', '.btnAnswer', onPlayerAnswerClick)
+    .on('click', '#btnPlayerRestart', onPlayerRestart);
 }
 
-function playerJoinGame(data) {
-  socket.emit('playerJoinGame', data);
+function bindEmitterEvents () {
+  emitter
+    .on('host/displayNewGameScreen', displayNewGameScreen)
+    .on('host/playerJoinedRoom', updateHostWaitingScreen)
+    .on('host/gameCountdown', hostGameCountdown)
+    .on('host/newWord', newWordHost)
+    .on('host/endGame', endGameHost)
+
+    .on('player/playerJoinedRoom', updatePlayerWaitingScreen)
+    .on('player/gameCountdown', playerGameCountdown)
+    .on('player/newWord', newWordPlayer)
 }
 
-function hostNextRound(data) {
-  socket.emit('hostNextRound', data);
+function endGameHost (data) {
+  // Get the data for player 1 from the host screen
+  var $p1 = $('#player1Score');
+  var p1Score = +$p1.find('.score').text();
+  var p1Name = $p1.find('.playerName').text();
+
+  // Get the data for player 2 from the host screen
+  var $p2 = $('#player2Score');
+  var p2Score = +$p2.find('.score').text();
+  var p2Name = $p2.find('.playerName').text();
+
+  // Find the winner based on the scores
+  var winner = (p1Score < p2Score) ? p2Name : p1Name;
+  var tie = (p1Score === p2Score);
+
+  // Display the winner (or tie game message)
+  if (tie) {
+      $('#hostWord').text("It's a Tie!");
+  } else {
+      $('#hostWord').text(winner + ' Wins!!');
+  }
+  textfit('#hostWord');
 }
 
-function hostCountdownFinished(gameId) {
-  socket.emit('hostCountdownFinished', gameId);
+function endGamePlayer (data) {
+  $button = $('<button>Start Again</button>')
+              .attr('id', 'btnPlayerRestart')
+              .addClass('btn')
+              .addClass('btnGameOver');
+
+  render('<div class="gameOver">Game Over!</div>', $button);
 }
 
-function hostRoomFull(gameId) {
-  socket.emit('hostRoomFull', gameId);
+function newWordHost(word) {
+  $('#hostWord').text(word);
+  textfit('#hostWord');
 }
 
-function hostCreateNewGame() {
-  socket.emit('hostCreateNewGame');
+function newWordPlayer(list) {
+  var $list = $('<ul/>').attr('id', 'ulAnswers');
+
+  $.each(list, function() {
+    $list
+      .append($('<li/>')
+      .append($('<button/>')
+        .addClass('btnAnswer')
+        .addClass('btn')
+        .val(this)
+        .html(this)
+      )
+    );
+  });
+
+  render($list);
 }
 
-function onConnected() {
-  emitter.emit('io/connected', socket.socket.sessionid);
+function showInitScreen() {
+    render($el.templateIntroScreen);
+    textfit('.title');
 }
 
-function onNewGameCreated(data) {
-  emitter.emit('io/newGameCreated', data);
+function displayNewGameScreen(gameId) {
+    render($el.templateNewGame);
+
+    // Visa lokala/publika ip?
+    $('#gameURL').text(window.location.href);
+    textfit('#gameURL');
+
+    $('#spanNewGameCode').text(gameId);
 }
 
-function playerJoinedRoom(data) {
-  emitter.emit('io/playerJoinedRoom', data);
+function hostGameCountdown (players) {
+  render($el.hostGame);
+  textfit('#hostWord');
+
+  // Display the players' names on screen
+  $('#player1Score')
+      .find('.playerName')
+      .html(players[0].playerName);
+
+  $('#player2Score')
+      .find('.playerName')
+      .html(players[1].playerName);
+
+  // Set the Score section on screen to 0 for each player.
+  $('#player1Score').find('.score').attr('id', players[0].mySocketId);
+  $('#player2Score').find('.score').attr('id', players[1].mySocketId);
+
 }
 
-function beginNewGame(data) {
-  emitter.emit('io/beginNewGame', data);
+function playerGameCountdown () {
+  $('#gameArea')
+      .html('<div class="gameOver">Get Ready!</div>');
 }
 
-function onNewWordData(data) {
-  emitter.emit('io/onNewWordData', data);
+function updateHostWaitingScreen (playerName) {
+  $('#playersWaiting')
+    .append('<p/>')
+    .text('Player ' + playerName + ' joined the game.');
 }
 
-function hostCheckAnswer(data) {
-  emitter.emit('io/hostCheckAnswer', data);
+function updatePlayerWaitingScreen (gameId) {
+  console.log(gameId);
+  $('#playerWaitingMessage')
+    .append('<p/>')
+    .text('Joined Game ' + gameId + '. Please wait for game to begin.');
+
 }
 
-function gameOver(data) {
-  emitter.emit('io/gameOver', data);
+function onCreateClick() {
+  emitter.emit('view/hostCreateNewGame');
 }
 
-function error(data) {
-  alert(data.message);
+function onJoinClick() {
+  render($el.templateJoinGame);
 }
 
-},{}]},{},["/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/index.js"]);
+function onPlayerStartClick() {
+  var data = {
+      gameId: +($('#inputGameId').val()),
+      playerName: $('#inputPlayerName').val() || 'anon'
+  };
+  emitter.emit('view/playerJoinGame', data);
+}
+
+function onPlayerAnswerClick() {
+  var $btn = $(this);
+  var answer = $btn.val();
+  emitter.emit('view/playerAnswer', answer);
+}
+
+function onPlayerRestart() {
+  emitter.emit('view/playerRestart');
+  render("<h3>Waiting on host to start new game.</h3>");
+}
+
+function render (template, appendix) {
+  $el.gameArea
+    .html(template)
+    .append(appendix);
+}
+
+},{"./components/js/textfit.js":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/js/textfit.js"}]},{},["/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/index.coffee"]);

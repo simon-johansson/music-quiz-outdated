@@ -10,7 +10,7 @@ var textfit = require('./textfit');
  */
 
  module.exports = function( $el, startTime, callback) {
-
+    $el = $el || $('#hostWord');
     // Display the starting time on the screen.
     $el.text(startTime);
     textfit('#hostWord');

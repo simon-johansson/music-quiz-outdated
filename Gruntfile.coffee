@@ -43,7 +43,7 @@ module.exports = (grunt)->
         livereload: true
 
       scripts:
-        files: ['public/app.js']
+        files: ['public/bundle.js']
 
       markup:
         files: ['public/*/**.html']
@@ -78,13 +78,17 @@ module.exports = (grunt)->
 
     browserify:
       compile:
-        src: 'public/scripts/index.js'
+        src: 'public/scripts/index.coffee'
         dest: 'public/bundle.js'
+        options:
+          transform: ['coffeeify']
 
       dev:
-        src: 'public/scripts/index.js'
+        src: 'public/scripts/index.coffee'
         dest: 'public/bundle.js'
-        options: watch: true
+        options:
+          watch: true
+          transform: ['coffeeify']
 
   grunt.registerTask 'default', [
     'browserify:compile'
