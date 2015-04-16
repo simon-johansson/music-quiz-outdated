@@ -1,102 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
+  <meta charset="utf-8"/>
 
-    <!-- Ensure that everything scales appropriately on a mobile device -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <!-- Ensure that everything scales appropriately on a mobile device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-    <!-- Let's borrow a cool looking Font from Google -->
-    <link href='https://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
+  <!-- Let's borrow a cool looking Font from Google -->
+  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
-    <link href="styles.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
 </head>
 
 <body>
 
+  <div id="gameArea"></div>
 
-    <div id="gameArea">
-        <!-- This is where the templates defined below will be used -->
+  <!-- Main Title Screen that appears when the page loads for the first time -->
+  <script id="intro-screen-template" type="text/template">
+
+    <div class="background">
+      <ul></ul>
+    </div>
+    <div class="grad"></div>
+
+    <div class="titleWrapper">
+
+      <div class="title">
+        <h1>Quizify</h1>
+      </div>
+
+      <div class="buttons">
+
+        <button id="btnCreateGame" class="btn">CREATE</button>
+        <button id="btnJoinGame" class="btn">JOIN</button>
+        <div style="clear:both"></div>
+      </div>
+
     </div>
 
-    <!-- Main Title Screen that appears when the page loads for the first time -->
-    <script id="intro-screen-template" type="text/template">
+  </script>
 
-        <div class="titleWrapper">
+  <!-- This screen appears when a user clicks "CREATE" on the Title Screen -->
+  <script id="create-game-template" type="text/template">
+    <div class="createGameWrapper">
 
-            <div class="title">
-                Quizify
-            </div>
+      <div class="info">Open this site on your mobile device:</div>
+      <div id="gameURL" class="infoBig">Error!</div>
 
-            <div class="buttons">
+      <div class="info">Then click <strong>JOIN</strong> and <br/> enter the following Game ID:</div>
+      <div id="spanNewGameCode" class="gameId">Error!</div>
 
-                <button id="btnCreateGame" class="btn left">CREATE</button>
-                <button id="btnJoinGame" class="btn right">JOIN</button>
-                <div style="clear:both"></div>
-            </div>
+      <div id="playersWaiting"></div>
+    </div>
+  </script>
 
+  <!-- This scrreen appears when a player clicks "JOIN" on the Title Screen -->
+  <script id="join-game-template" type="text/template">
+    <div class="joinGameWrapper">
+      <div class="info">
+        <label for="inputPlayerName">Your Name:</label>
+        <input id="inputPlayerName" type="text" />
+      </div>
+
+      <div class="info">
+        <label for="inputGameId">Game ID:</label>
+        <input id="inputGameId" type="text"/>
+      </div>
+
+      <div class="info buttons">
+        <button id="btnJoin" class="btn">ENTER</button>
+        <button id="btnStart" class="btn hide">START!</button>
+        <div id="playerWaitingMessage">
+          <p></p>
         </div>
+      </div>
+    </div>
+  </script>
 
-    </script>
+  <!-- This is the 'Host' screen. It displays the word for each player to match -->
+  <script id="host-game-template" type="text/template">
+    <div id="wordArea">
+    <p class="artist"></p>
+    <p class="song"></p>
+    <img class="cover" src="" alt="">
+      <div id="hostWord">5</div>
+    </div>
+    <div id="playerScores">
+      <div class="playerScoreWrapper">
+        <% _.forEach(players, function(player, i) { %>
+          <div id="player<%- i + 1 %>Score" class="playerScore">
+            <span class="score" id="<%- player.mySocketId %>">0</span><span class="playerName"><%- player.playerName %></span>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </script>
 
-    <!-- This screen appears when a user clicks "CREATE" on the Title Screen -->
-    <script id="create-game-template" type="text/template">
-        <div class="createGameWrapper">
+  <!-- JavaScript Libraries -->
+  <script src="libs/q/q.js"></script>
+  <script src="libs/spotify-web-api-js/src/spotify-web-api.js"></script>
+  <script src="libs/jquery-2.0.2.min.js"></script>
+  <script src="libs/lodash/lodash.min.js"></script>
+  <script src="libs/textfit/textFit.min.js"></script>
+  <script src="libs/fastclick.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
 
-            <div class="info">Open this site on your mobile device:</div>
-            <div id="gameURL" class="infoBig">Error!</div>
-
-            <div class="info">Then click <strong>JOIN</strong> and <br/> enter the following Game ID:</div>
-            <div id="spanNewGameCode" class="gameId">Error!</div>
-
-            <div id="playersWaiting"></div>
-        </div>
-    </script>
-
-    <!-- This scrreen appears when a player clicks "JOIN" on the Title Screen -->
-    <script id="join-game-template" type="text/template">
-        <div class="joinGameWrapper">
-            <div class="info">
-                <label for="inputPlayerName">Your Name:</label>
-                <input id="inputPlayerName" type="text" />
-            </div>
-
-            <div class="info">
-                <label for="inputGameId">Game ID:</label>
-                <input id="inputGameId" type="text"/>
-            </div>
-
-            <div class="info buttons">
-                <button id="btnStart" class="btn">Start</button>
-                <div id="playerWaitingMessage"></div>
-            </div>
-        </div>
-    </script>
-
-    <!-- This is the 'Host' screen. It displays the word for each player to match -->
-    <script id="host-game-template" type="text/template">
-        <div id="wordArea">
-            <div id="hostWord">5</div>
-        </div>
-        <div id="playerScores">
-            <div id="player1Score" class="playerScore">
-                <span class="score">0</span><span class="playerName">Player 1</span>
-            </div>
-            <div id="player2Score" class="playerScore">
-                <span class="playerName">Player 2</span><span class="score">0</span>
-            </div>
-        </div>
-    </script>
-
-    <!-- JavaScript Libraries -->
-    <script src="libs/q/q.js"></script>
-    <script src="libs/spotify-web-api-js/src/spotify-web-api.js"></script>
-    <script src="libs/jquery-2.0.2.min.js"></script>
-    <script src="libs/textFit.min.js"></script>
-    <script src="libs/fastclick.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-
-    <script src="bundle.js"></script>
+  <script src="bundle.js"></script>
 
 </body>
 </html>

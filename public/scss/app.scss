@@ -1,1 +1,22 @@
-@import 'styles';
+@import 'variables';
+
+@import 'components/utils';
+@import 'components/buttons';
+@import 'components/dynamic_background';
+
+@import 'views/title_screen';
+@import 'views/join_create_screen';
+@import 'views/game_screen';
+@import 'views/host_screen';
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: $spotify-black;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

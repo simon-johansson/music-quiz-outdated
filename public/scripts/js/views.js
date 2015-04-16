@@ -47,6 +47,7 @@ function bindEmitterEvents () {
     .on('player/playerJoinedRoom', updatePlayerWaitingScreen)
     .on('player/gameCountdown', playerGameCountdown)
     .on('player/newWord', newWordPlayer)
+    .on('player/endGame', endGamePlayer)
 }
 
 function endGameHost (data) {

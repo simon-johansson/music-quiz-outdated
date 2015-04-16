@@ -2,161 +2,166 @@
 countdown = require './components/countdown.coffee'
 audio     = require './components/audio.coffee'
 
-App =
+game = ''
+mySocketId = ''
+emitter = ''
 
-  gameId: 0
-  myRole: ''
-  mySocketId: ''
-  currentRound: 0
-  emitter: ''
+init = (data) ->
+ emitter = data.emitter
+ emitter
+   .on 'io/connected', (id) -> mySocketId = id
+   .on 'io/newGameCreated', (data) -> game = new Host(data)
+   .on 'view/playerJoinGame', (data) -> game = new Player(data)
 
-  init: (data) ->
-    App.emitter = data.emitter
-    App.bindEmitterEvents()
 
-  bindEmitterEvents: ->
-    App.emitter
+class Role
+  constructor: (data) ->
+    @mySocketId = mySocketId
+    @gameId = undefined
+    @currentRound = undefined
+    @emitter = emitter
+    @bindEvents()
 
-    .on 'io/connected', App.setSocketID
+  bindEvents: ->
+    @emitter
+      .on 'io/beginNewGame', @gameCountdown
+      .on 'io/playerJoinedRoom', @updateWaitingScreen
+      .on 'io/onNewWordData', @newWord
+      .on 'io/gameOver', @endGame
 
-    .on 'io/beginNewGame', (data) ->
-      App[App.myRole].gameCountdown data
 
-    .on 'io/onNewWordData', (data) ->
-      App.currentRound = data.round
-      App[App.myRole].newWord data
+class Host extends Role
+  constructor: (data) ->
+    super
+    @myRole = 'Host'
+    @mySocketId = data.mySocketId
+    @gameInit data.gameId
+    @bindHostEvets()
 
-    .on 'io/gameOver', (data) ->
-      App[App.myRole].endGame data
+  bindHostEvets: ->
+    @emitter.on 'io/hostCheckAnswer', @checkAnswer
 
-    .on 'io/newGameCreated', (data) ->
-      App.Host.gameInit data
+  gameInit: (id) ->
+    @gameId = id
+    @players = []
+    # @numPlayersInRoom = 0
+    @maxNumberOfPlayers = 8
+    @isNewGame = false
+    @currentCorrectAnswer = undefined
+    @currentSong = undefined
+    @emitter.emit 'host/displayNewGameScreen', @gameId
 
-    .on 'io/hostCheckAnswer', (data) ->
-      if App.myRole == 'Host'
-        App.Host.checkAnswer data
+  updateWaitingScreen: (data) =>
+    if @isNewGame
+      @emitter.emit 'host/displayNewGameScreen', @gameId
+    @emitter.emit 'host/playerJoinedRoom', data.playerName
+    @players.push data
+    # if @players.length is @maxNumberOfPlayers
+      # @emitter.emit 'host/roomReady', @gameId
 
-    .on 'io/playerJoinedRoom', (data) ->
-      App[App.myRole].updateWaitingScreen data
+  gameCountdown: =>
+    @emitter.emit 'host/gameCountdown', @players
+    countdown false, 5, =>
+      @emitter.emit 'host/hostCountdownFinished', @gameId
 
-    # .on 'view/playerJoinGame', App.Player.onPlayerStart
-    .on 'view/playerAnswer', App.Player.onPlayerAnswer
-    .on 'view/playerRestart', App.Player.onPlayerRestart
+  newWord: (data) =>
+    @emitter.emit 'host/newWord', data.word
+    @currentRound = data.round
+    @currentCorrectAnswer = data.answer
+    @currentSong =
+      song: data.song
+      cover: data.cover
+    audio.play data.audio
 
-  setSocketID: (id) -> App.mySocketId = id
+  checkAnswer: (data) =>
+    if data.round is @currentRound
+      $pScore = $('#' + data.playerId)
+      if @currentCorrectAnswer is data.answer
+        $pScore.addClass 'round-winner'
+        $pScore.text +$pScore.text() + 5
+        # audio.stop()
+        @currentRound += 1
+        data =
+          gameId: @gameId
+          round: @currentRound
+          artist: @currentCorrectAnswer
+          song: @currentSong.song
+          cover: @currentSong.cover
 
-  Host:
-
-    players: []
-    isNewGame: false
-    numPlayersInRoom: 0
-    currentCorrectAnswer: ''
-
-    gameInit: (data) ->
-      App.gameId = data.gameId
-      App.mySocketId = data.mySocketId
-      App.myRole = 'Host'
-      App.Host.numPlayersInRoom = 0
-      App.emitter.emit 'host/displayNewGameScreen', App.gameId
-      # console.log("Game started with ID: " + App.gameId + ' by host: ' + App.mySocketId);
-
-    updateWaitingScreen: (data) ->
-      if App.Host.isNewGame
-        App.emitter.emit 'host/displayNewGameScreen', App.gameId
-      App.emitter.emit 'host/playerJoinedRoom', data.playerName
-      App.Host.players.push data
-      App.Host.numPlayersInRoom += 1
-      if App.Host.numPlayersInRoom == 2
-        # console.log('Room is full. Almost ready!');
-        App.emitter.emit 'host/hostRoomFull', App.gameId
-
-    gameCountdown: ->
-      App.emitter.emit 'host/gameCountdown', App.Host.players
-      countdown false, 5, ->
-        App.emitter.emit 'host/hostCountdownFinished', App.gameId
-
-    newWord: (data) ->
-      # Insert the new word into the DOM
-      App.emitter.emit 'host/newWord', data.word
-      audio.play data.audio
-      # Update the data for the current round
-      App.Host.currentCorrectAnswer = data.answer
-      App.Host.currentRound = data.round
-
-    checkAnswer: (data) ->
-      # Verify that the answer clicked is from the current round.
-      # This prevents a 'late entry' from a player whos screen has not
-      # yet updated to the current round.
-      if data.round == App.currentRound
-        # Get the player's score
-        $pScore = $('#' + data.playerId)
-        # Advance player's score if it is correct
-        if App.Host.currentCorrectAnswer == data.answer
-          # Add 5 to the player's score
-          $pScore.text +$pScore.text() + 5
+        @emitter.emit 'host/showAnswer', data
+        countdown false, 8, =>
           audio.stop()
-          # Advance the round
-          App.currentRound += 1
-          # Prepare data to send to the server
-          data =
-            gameId: App.gameId
-            round: App.currentRound
-          # Notify the server to start the next round.
-          App.emitter.emit 'host/hostNextRound', data
-          # IO.socket.emit('hostNextRound', data);
-        else
-          # A wrong answer was submitted, so decrement the player's score.
-          $pScore.text + $pScore.text() - 3
+          $('.score').removeClass 'round-winner'
+          @emitter.emit 'host/hostNextRound', data
 
-    endGame: (data) ->
-      App.emitter.emit 'host/endGame', data
-      # Reset game data
-      App.Host.numPlayersInRoom = 0
-      App.Host.isNewGame = true
+      else $pScore.text +$pScore.text() - 6
 
-    restartGame: ->
-      App.$gameArea.html App.$templateNewGame
-      $('#spanNewGameCode').text App.gameId
+  endGame: (data) =>
+    @emitter.emit 'host/endGame', @players
+    @players = []
+    @isNewGame = true
 
-  Player:
+  restartGame: ->
+    App.$gameArea.html App.$templateNewGame
+    $('#spanNewGameCode').text App.gameId
 
-    hostSocketId: ''
-    myName: ''
 
-    onPlayerStart: (data) ->
-      App.myRole = 'Player'
-      App.Player.myName = data.playerName
-      App.emitter.emit 'player/playerJoinedRoom', data.gameId
 
-    onPlayerAnswer: (answer) ->
-      data =
-        gameId: App.gameId
-        playerId: App.mySocketId
-        answer: answer
-        round: App.currentRound
-      App.emitter.emit 'player/playerAnswer', data
 
-    onPlayerRestart: ->
-      data =
-        gameId: App.gameId
-        playerName: App.Player.myName
-      App.currentRound = 0
-      App.emitter.emit 'player/playerRestart', data
+class Player extends Role
+  constructor: (data) ->
+    super
+    @myRole = 'Player'
+    @myName = data.playerName
+    @gameId = data.gameId
+    @hostSocketId = undefined
+    @bindPlayerEvets()
 
-    updateWaitingScreen: (data) ->
-      if true
-        App.myRole = 'Player'
-        App.gameId = data.gameId
-        App.emitter.emit 'player/playerJoinedRoom', App.gameId
+  bindPlayerEvets: ->
+    @emitter
+      .on 'player/startGame',  @startGame
+      .on 'view/playerAnswer',  @onPlayerAnswer
+      .on 'view/playerRejoin', @onPlayerRejoin
+      .on 'io/showingAnswer', @showAnswer
 
-    gameCountdown: (hostData) ->
-      App.Player.hostSocketId = hostData.mySocketId
-      App.emitter.emit 'player/gameCountdown'
+  updateWaitingScreen: (data) =>
+    if true # IO.socket.socket.sessionid === data.mySocketId
+      @myRole = 'Player'
+      @gameId =  data.gameId
+      @emitter.emit 'player/playerJoinedRoom', @gameId
 
-    newWord: (data) ->
-      App.emitter.emit 'player/newWord', data.list
+  startGame: =>
+    emitter.emit 'player/roomReady',  @gameId
 
-    endGame: ->
-      App.emitter.emit 'player/endGame'
+  onPlayerAnswer: (answer) =>
+    data =
+      gameId:   @gameId
+      playerId: @mySocketId
+      answer:   answer
+      round:    @currentRound
 
-module.exports = init: App.init
+    @emitter.emit 'player/playerAnswer', data
+
+  onPlayerRejoin: =>
+    data =
+      gameId:     @gameId
+      playerName: @myName
+    @currentRound = 0
+    @emitter.emit 'player/playerRejoin', data
+
+  gameCountdown: (data) =>
+    @hostSocketId = data.mySocketId
+    @emitter.emit 'player/gameCountdown'
+
+  showAnswer: (data) =>
+    @emitter.emit 'player/showAnswer'
+
+  newWord: (data) =>
+    @currentRound = data.round
+    @emitter.emit 'player/newWord', data.list
+
+  endGame: =>
+    @emitter.emit 'player/endGame'
+
+
+module.exports = init: init

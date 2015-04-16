@@ -14,22 +14,25 @@ bindEvents = ->
   socket.on 'beginNewGame', beginNewGame
   socket.on 'newWordData', onNewWordData
   socket.on 'hostCheckAnswer', hostCheckAnswer
+  socket.on 'showingAnswer', showingAnswer
   socket.on 'gameOver', gameOver
   socket.on 'error', error
 
   emitter.on 'view/hostCreateNewGame', hostCreateNewGame
   emitter.on 'view/playerJoinGame', playerJoinGame
 
-  emitter.on 'host/hostRoomFull', hostRoomFull
+  emitter.on 'host/roomReady', roomReady
   emitter.on 'host/hostCountdownFinished', hostCountdownFinished
+  emitter.on 'host/showAnswer', hostShowAnswer
   emitter.on 'host/hostNextRound', hostNextRound
 
   # emitter.on 'player/playerJoinGame', playerJoinGame
+  emitter.on 'player/roomReady', roomReady
   emitter.on 'player/playerAnswer', playerAnswer
-  emitter.on 'player/playerRestart', playerRestart
+  emitter.on 'player/playerRejoin', playerRejoin
 
 # socket
-playerRestart = (data) ->
+playerRejoin = (data) ->
   socket.emit 'playerRestart', data
 
 playerAnswer = (data) ->
@@ -44,7 +47,10 @@ hostNextRound = (data) ->
 hostCountdownFinished = (gameId) ->
   socket.emit 'hostCountdownFinished', gameId
 
-hostRoomFull = (gameId) ->
+hostShowAnswer = (gameId) ->
+  socket.emit 'hostShowAnswer', gameId
+
+roomReady = (gameId) ->
   socket.emit 'hostRoomFull', gameId
 
 hostCreateNewGame = ->
@@ -67,6 +73,9 @@ onNewWordData = (data) ->
 
 hostCheckAnswer = (data) ->
   emitter.emit 'io/hostCheckAnswer', data
+
+showingAnswer = (data) ->
+  emitter.emit 'io/showingAnswer', data
 
 gameOver = (data) ->
   emitter.emit 'io/gameOver', data

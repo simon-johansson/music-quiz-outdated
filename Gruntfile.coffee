@@ -42,20 +42,20 @@ module.exports = (grunt)->
         spawn: false
         livereload: true
 
-      scripts:
-        files: ['public/bundle.js']
+      # scripts:
+      #   files: ['public/bundle.js']
 
-      markup:
-        files: ['public/*/**.html']
+      # markup:
+      #   files: ['public/*/**.html']
 
-      styles:
-        files: ['public/styles.css']
+      # styles:
+      #   files: ['public/styles.css']
 
       scss:
         options:
           livereload: false
         files: ['public/scss/**/*.scss']
-        task: 'sass'
+        tasks: ['sass']
 
     nodemon:
       dev:
@@ -68,8 +68,8 @@ module.exports = (grunt)->
             DEBUG: 'http'
 
     sass:
-      options:
-        sourceMap: true
+      # options:
+        # sourcemap: true
       public:
         files:
           'public/styles.css': 'public/scss/app.scss'
@@ -97,6 +97,7 @@ module.exports = (grunt)->
 
   grunt.registerTask 'dev', [
     'browserify'
+    'sass'
     'watch'
     # 'nodemon'
   ]

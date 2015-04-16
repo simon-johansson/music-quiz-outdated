@@ -5,4 +5,5 @@ module.exports = (el) ->
     alignVert:   false
     widthOnly:   true
     reProcess:   true
-    maxFontSize: 180
+    # minFontSize: 6,
+    maxFontSize: 80,

@@ -13,7 +13,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Create a Node.js based http server on port 8080
-var server = require('http').createServer(app).listen(8080, function () {
+var server = require('http').createServer(app).listen(app.get('port'), function () {
   debug('listening on port ' + app.get('port'));
 });
 

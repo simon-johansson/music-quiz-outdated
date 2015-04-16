@@ -1,0 +1,54 @@
+// intro-screen-template
+
+#gameArea {
+  height: 100%;
+  width: 100%;
+}
+
+.titleWrapper {
+  font-family: $main-font;
+  font-weight: 400;
+  position: absolute;
+  height: 50%;
+  width: 96%;
+  margin: auto;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+}
+
+.title {
+  margin: 0px auto 20px;
+  text-align: center;
+  width: 100%;
+
+  h1 {
+    font-family: $main-font;
+    color: $spotify-white;
+    font-weight: 300;
+    font-size: 180px;
+    margin: 20px auto;
+    @media screen and (max-width: $break-small) {
+      font-size: 80px;
+    }
+  }
+}
+
+.buttons {
+  width: 100%;
+  text-align: center;
+  .btn {
+    max-width: 300px;
+    height: 100px;
+    @media screen and (max-width: $break-small) {
+      height: 80px;
+    }
+  }
+  #btnCreateGame {
+    margin-right: 20px;
+    @media screen and (max-width: $break-small) {
+      display: none;
+    }
+  }
+}

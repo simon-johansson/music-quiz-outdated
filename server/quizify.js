@@ -23,6 +23,7 @@ exports.initGame = function(sio, socket){
     gameSocket.on('hostRoomFull', hostPrepareGame);
     gameSocket.on('hostCountdownFinished', hostStartGame);
     gameSocket.on('hostNextRound', hostNextRound);
+    gameSocket.on('hostShowAnswer', hostShowAnswer);
 
     // Player Events
     gameSocket.on('playerJoinGame', playerJoinGame);
@@ -73,6 +74,10 @@ function hostStartGame(gameId) {
     sendWord(0, gameId);
 };
 
+function hostShowAnswer(data) {
+    io.sockets.in(data.gameId).emit('showingAnswer', data);
+};
+
 /**
  * A player answered correctly. Time for the next word.
  * @param data Sent from the client. Contains the current round and gameId (room)
@@ -83,7 +88,7 @@ function hostNextRound(data) {
         sendWord(data.round, data.gameId);
     } else {
         // If the current round exceeds the number of words, send the 'gameOver' event.
-        io.sockets.in(data.gameId).emit('gameOver',data);
+        io.sockets.in(data.gameId).emit('gameOver', data);
     }
 }
 /* *****************************
@@ -105,8 +110,6 @@ function playerJoinGame(data) {
     var sock = this;
 
     // Look up the room ID in the Socket.IO manager object.
-    console.log(data.gameId);
-    console.log(gameSocket.rooms);
     var room = gameSocket.manager.rooms["/" + data.gameId];
 
     // If the room exists...
@@ -235,57 +238,8 @@ function shuffle(array) {
  *
  * @type {Array}
  */
-var wordPool = [
-    {
-        "words"  : [ "sale","seal","ales","leas" ],
-        "decoys" : [ "lead","lamp","seed","eels","lean","cels","lyse","sloe","tels","self" ]
-    },
-
-    {
-        "words"  : [ "item","time","mite","emit" ],
-        "decoys" : [ "neat","team","omit","tame","mate","idem","mile","lime","tire","exit" ]
-    },
-
-    {
-        "words"  : [ "spat","past","pats","taps" ],
-        "decoys" : [ "pots","laps","step","lets","pint","atop","tapa","rapt","swap","yaps" ]
-    },
-
-    {
-        "words"  : [ "nest","sent","nets","tens" ],
-        "decoys" : [ "tend","went","lent","teen","neat","ante","tone","newt","vent","elan" ]
-    },
-
-    {
-        "words"  : [ "pale","leap","plea","peal" ],
-        "decoys" : [ "sale","pail","play","lips","slip","pile","pleb","pled","help","lope" ]
-    },
-
-    {
-        "words"  : [ "races","cares","scare","acres" ],
-        "decoys" : [ "crass","scary","seeds","score","screw","cager","clear","recap","trace","cadre" ]
-    },
-
-    {
-        "words"  : [ "bowel","elbow","below","beowl" ],
-        "decoys" : [ "bowed","bower","robed","probe","roble","bowls","blows","brawl","bylaw","ebola" ]
-    },
-
-    {
-        "words"  : [ "dates","stead","sated","adset" ],
-        "decoys" : [ "seats","diety","seeds","today","sited","dotes","tides","duets","deist","diets" ]
-    },
-
-    {
-        "words"  : [ "spear","parse","reaps","pares" ],
-        "decoys" : [ "ramps","tarps","strep","spore","repos","peris","strap","perms","ropes","super" ]
-    },
-
-    {
-        "words"  : [ "stone","tones","steno","onset" ],
-        "decoys" : [ "snout","tongs","stent","tense","terns","santo","stony","toons","snort","stint" ]
-    }
-]
+// var wordPool = [1,2,3,4,5,6,7];
+var wordPool = [1,2];
 
 /*
 * Overrides below

@@ -302,155 +302,232 @@ function isUndefined(arg) {
 }
 
 },{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.coffee":[function(require,module,exports){
-var App, audio, countdown;
+var Host, Player, Role, audio, countdown, emitter, game, init, mySocketId,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
 countdown = require('./components/countdown.coffee');
 
 audio = require('./components/audio.coffee');
 
-App = {
-  gameId: 0,
-  myRole: '',
-  mySocketId: '',
-  currentRound: 0,
-  emitter: '',
-  init: function(data) {
-    App.emitter = data.emitter;
-    return App.bindEmitterEvents();
-  },
-  bindEmitterEvents: function() {
-    return App.emitter.on('io/connected', App.setSocketID).on('io/beginNewGame', function(data) {
-      return App[App.myRole].gameCountdown(data);
-    }).on('io/onNewWordData', function(data) {
-      App.currentRound = data.round;
-      return App[App.myRole].newWord(data);
-    }).on('io/gameOver', function(data) {
-      return App[App.myRole].endGame(data);
-    }).on('io/newGameCreated', function(data) {
-      return App.Host.gameInit(data);
-    }).on('io/hostCheckAnswer', function(data) {
-      if (App.myRole === 'Host') {
-        return App.Host.checkAnswer(data);
-      }
-    }).on('io/playerJoinedRoom', function(data) {
-      return App[App.myRole].updateWaitingScreen(data);
-    }).on('view/playerAnswer', App.Player.onPlayerAnswer).on('view/playerRestart', App.Player.onPlayerRestart);
-  },
-  setSocketID: function(id) {
-    return App.mySocketId = id;
-  },
-  Host: {
-    players: [],
-    isNewGame: false,
-    numPlayersInRoom: 0,
-    currentCorrectAnswer: '',
-    gameInit: function(data) {
-      App.gameId = data.gameId;
-      App.mySocketId = data.mySocketId;
-      App.myRole = 'Host';
-      App.Host.numPlayersInRoom = 0;
-      return App.emitter.emit('host/displayNewGameScreen', App.gameId);
-    },
-    updateWaitingScreen: function(data) {
-      if (App.Host.isNewGame) {
-        App.emitter.emit('host/displayNewGameScreen', App.gameId);
-      }
-      App.emitter.emit('host/playerJoinedRoom', data.playerName);
-      App.Host.players.push(data);
-      App.Host.numPlayersInRoom += 1;
-      if (App.Host.numPlayersInRoom === 2) {
-        return App.emitter.emit('host/hostRoomFull', App.gameId);
-      }
-    },
-    gameCountdown: function() {
-      App.emitter.emit('host/gameCountdown', App.Host.players);
-      return countdown(false, 5, function() {
-        return App.emitter.emit('host/hostCountdownFinished', App.gameId);
-      });
-    },
-    newWord: function(data) {
-      App.emitter.emit('host/newWord', data.word);
-      audio.play(data.audio);
-      App.Host.currentCorrectAnswer = data.answer;
-      return App.Host.currentRound = data.round;
-    },
-    checkAnswer: function(data) {
-      var $pScore;
-      if (data.round === App.currentRound) {
-        $pScore = $('#' + data.playerId);
-        if (App.Host.currentCorrectAnswer === data.answer) {
-          $pScore.text(+$pScore.text() + 5);
-          audio.stop();
-          App.currentRound += 1;
-          data = {
-            gameId: App.gameId,
-            round: App.currentRound
-          };
-          return App.emitter.emit('host/hostNextRound', data);
-        } else {
-          return $pScore.text + $pScore.text() - 3;
-        }
-      }
-    },
-    endGame: function(data) {
-      App.emitter.emit('host/endGame', data);
-      App.Host.numPlayersInRoom = 0;
-      return App.Host.isNewGame = true;
-    },
-    restartGame: function() {
-      App.$gameArea.html(App.$templateNewGame);
-      return $('#spanNewGameCode').text(App.gameId);
-    }
-  },
-  Player: {
-    hostSocketId: '',
-    myName: '',
-    onPlayerStart: function(data) {
-      App.myRole = 'Player';
-      App.Player.myName = data.playerName;
-      return App.emitter.emit('player/playerJoinedRoom', data.gameId);
-    },
-    onPlayerAnswer: function(answer) {
-      var data;
-      data = {
-        gameId: App.gameId,
-        playerId: App.mySocketId,
-        answer: answer,
-        round: App.currentRound
-      };
-      return App.emitter.emit('player/playerAnswer', data);
-    },
-    onPlayerRestart: function() {
-      var data;
-      data = {
-        gameId: App.gameId,
-        playerName: App.Player.myName
-      };
-      App.currentRound = 0;
-      return App.emitter.emit('player/playerRestart', data);
-    },
-    updateWaitingScreen: function(data) {
-      if (true) {
-        App.myRole = 'Player';
-        App.gameId = data.gameId;
-        return App.emitter.emit('player/playerJoinedRoom', App.gameId);
-      }
-    },
-    gameCountdown: function(hostData) {
-      App.Player.hostSocketId = hostData.mySocketId;
-      return App.emitter.emit('player/gameCountdown');
-    },
-    newWord: function(data) {
-      return App.emitter.emit('player/newWord', data.list);
-    },
-    endGame: function() {
-      return App.emitter.emit('player/endGame');
-    }
-  }
+game = '';
+
+mySocketId = '';
+
+emitter = '';
+
+init = function(data) {
+  emitter = data.emitter;
+  return emitter.on('io/connected', function(id) {
+    return mySocketId = id;
+  }).on('io/newGameCreated', function(data) {
+    return game = new Host(data);
+  }).on('view/playerJoinGame', function(data) {
+    return game = new Player(data);
+  });
 };
 
+Role = (function() {
+  function Role(data) {
+    this.mySocketId = mySocketId;
+    this.gameId = void 0;
+    this.currentRound = void 0;
+    this.emitter = emitter;
+    this.bindEvents();
+  }
+
+  Role.prototype.bindEvents = function() {
+    return this.emitter.on('io/beginNewGame', this.gameCountdown).on('io/playerJoinedRoom', this.updateWaitingScreen).on('io/onNewWordData', this.newWord).on('io/gameOver', this.endGame);
+  };
+
+  return Role;
+
+})();
+
+Host = (function(superClass) {
+  extend(Host, superClass);
+
+  function Host(data) {
+    this.endGame = bind(this.endGame, this);
+    this.checkAnswer = bind(this.checkAnswer, this);
+    this.newWord = bind(this.newWord, this);
+    this.gameCountdown = bind(this.gameCountdown, this);
+    this.updateWaitingScreen = bind(this.updateWaitingScreen, this);
+    Host.__super__.constructor.apply(this, arguments);
+    this.myRole = 'Host';
+    this.mySocketId = data.mySocketId;
+    this.gameInit(data.gameId);
+    this.bindHostEvets();
+  }
+
+  Host.prototype.bindHostEvets = function() {
+    return this.emitter.on('io/hostCheckAnswer', this.checkAnswer);
+  };
+
+  Host.prototype.gameInit = function(id) {
+    this.gameId = id;
+    this.players = [];
+    this.maxNumberOfPlayers = 8;
+    this.isNewGame = false;
+    this.currentCorrectAnswer = void 0;
+    this.currentSong = void 0;
+    return this.emitter.emit('host/displayNewGameScreen', this.gameId);
+  };
+
+  Host.prototype.updateWaitingScreen = function(data) {
+    if (this.isNewGame) {
+      this.emitter.emit('host/displayNewGameScreen', this.gameId);
+    }
+    this.emitter.emit('host/playerJoinedRoom', data.playerName);
+    return this.players.push(data);
+  };
+
+  Host.prototype.gameCountdown = function() {
+    this.emitter.emit('host/gameCountdown', this.players);
+    return countdown(false, 5, (function(_this) {
+      return function() {
+        return _this.emitter.emit('host/hostCountdownFinished', _this.gameId);
+      };
+    })(this));
+  };
+
+  Host.prototype.newWord = function(data) {
+    this.emitter.emit('host/newWord', data.word);
+    this.currentRound = data.round;
+    this.currentCorrectAnswer = data.answer;
+    this.currentSong = {
+      song: data.song,
+      cover: data.cover
+    };
+    return audio.play(data.audio);
+  };
+
+  Host.prototype.checkAnswer = function(data) {
+    var $pScore;
+    if (data.round === this.currentRound) {
+      $pScore = $('#' + data.playerId);
+      if (this.currentCorrectAnswer === data.answer) {
+        $pScore.addClass('round-winner');
+        $pScore.text(+$pScore.text() + 5);
+        this.currentRound += 1;
+        data = {
+          gameId: this.gameId,
+          round: this.currentRound,
+          artist: this.currentCorrectAnswer,
+          song: this.currentSong.song,
+          cover: this.currentSong.cover
+        };
+        this.emitter.emit('host/showAnswer', data);
+        return countdown(false, 8, (function(_this) {
+          return function() {
+            audio.stop();
+            $('.score').removeClass('round-winner');
+            return _this.emitter.emit('host/hostNextRound', data);
+          };
+        })(this));
+      } else {
+        return $pScore.text(+$pScore.text() - 6);
+      }
+    }
+  };
+
+  Host.prototype.endGame = function(data) {
+    this.emitter.emit('host/endGame', this.players);
+    this.players = [];
+    return this.isNewGame = true;
+  };
+
+  Host.prototype.restartGame = function() {
+    App.$gameArea.html(App.$templateNewGame);
+    return $('#spanNewGameCode').text(App.gameId);
+  };
+
+  return Host;
+
+})(Role);
+
+Player = (function(superClass) {
+  extend(Player, superClass);
+
+  function Player(data) {
+    this.endGame = bind(this.endGame, this);
+    this.newWord = bind(this.newWord, this);
+    this.showAnswer = bind(this.showAnswer, this);
+    this.gameCountdown = bind(this.gameCountdown, this);
+    this.onPlayerRejoin = bind(this.onPlayerRejoin, this);
+    this.onPlayerAnswer = bind(this.onPlayerAnswer, this);
+    this.startGame = bind(this.startGame, this);
+    this.updateWaitingScreen = bind(this.updateWaitingScreen, this);
+    Player.__super__.constructor.apply(this, arguments);
+    this.myRole = 'Player';
+    this.myName = data.playerName;
+    this.gameId = data.gameId;
+    this.hostSocketId = void 0;
+    this.bindPlayerEvets();
+  }
+
+  Player.prototype.bindPlayerEvets = function() {
+    return this.emitter.on('player/startGame', this.startGame).on('view/playerAnswer', this.onPlayerAnswer).on('view/playerRejoin', this.onPlayerRejoin).on('io/showingAnswer', this.showAnswer);
+  };
+
+  Player.prototype.updateWaitingScreen = function(data) {
+    if (true) {
+      this.myRole = 'Player';
+      this.gameId = data.gameId;
+      return this.emitter.emit('player/playerJoinedRoom', this.gameId);
+    }
+  };
+
+  Player.prototype.startGame = function() {
+    return emitter.emit('player/roomReady', this.gameId);
+  };
+
+  Player.prototype.onPlayerAnswer = function(answer) {
+    var data;
+    data = {
+      gameId: this.gameId,
+      playerId: this.mySocketId,
+      answer: answer,
+      round: this.currentRound
+    };
+    return this.emitter.emit('player/playerAnswer', data);
+  };
+
+  Player.prototype.onPlayerRejoin = function() {
+    var data;
+    data = {
+      gameId: this.gameId,
+      playerName: this.myName
+    };
+    this.currentRound = 0;
+    return this.emitter.emit('player/playerRejoin', data);
+  };
+
+  Player.prototype.gameCountdown = function(data) {
+    this.hostSocketId = data.mySocketId;
+    return this.emitter.emit('player/gameCountdown');
+  };
+
+  Player.prototype.showAnswer = function(data) {
+    return this.emitter.emit('player/showAnswer');
+  };
+
+  Player.prototype.newWord = function(data) {
+    this.currentRound = data.round;
+    return this.emitter.emit('player/newWord', data.list);
+  };
+
+  Player.prototype.endGame = function() {
+    return this.emitter.emit('player/endGame');
+  };
+
+  return Player;
+
+})(Role);
+
 module.exports = {
-  init: App.init
+  init: init
 };
 
 
@@ -501,25 +578,64 @@ module.exports = function($el, startTime, callback) {
 
 
 
-},{"./textfit.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.coffee"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/js/textfit.js":[function(require,module,exports){
-/**
- * Make the text inside the given element as big as possible
- * See: https://github.com/STRML/textFit
- *
- * @param el The parent element of some text
- */
- module.exports = function (el) {
-    textFit(
-        $(el)[0],
-        {
-            alignHoriz: true,
-            alignVert: false,
-            widthOnly: true,
-            reProcess: true,
-            maxFontSize: 180
-        }
-    );
+},{"./textfit.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.coffee"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/dynamic_background.coffee":[function(require,module,exports){
+var imgs, tracks, update_cover;
+
+tracks = ['spotify:track:7b71WsDLb8gG0cSyDTFAEW', 'spotify:track:4B4zDmbHdkXZ1wUJv1yKFy', 'spotify:track:3cySlItpiPiIAzU3NyHCJf', 'spotify:track:3W3KtDwAIg3mAruSpnfG3Q', 'spotify:track:6K8qKeWo5MsFED7wCR6Kop', 'spotify:track:6HFbq7cewJ7rPiffV0ciil', 'spotify:track:2CAK2t1reUgPK6OMgAMURB', 'spotify:track:6PtXobrqImYfnpIxNsJApa', 'spotify:track:2wqaekenSQZm7hxQOYt8oE', 'spotify:track:5Sf3GyLEAzJXxZ5mbCPXTu', 'spotify:track:0TVV2gFROJaB3kIZyCUvIY', 'spotify:track:3U4isOIWM3VvDubwSI3y7a', 'spotify:track:5b88tNINg4Q4nrRbrCXUmg', 'spotify:track:3tCwjWLicbjsMCvXhN0WOE', 'spotify:track:4J8WVHRtXM6SMgsF7qohXy', 'spotify:track:2Dz8KeCYs9awlwUJStJlmh', 'spotify:track:4kgsK0fftHtg9gZOzkU5T2', 'spotify:track:1BltsyC5W3SAABdxyrDXwi', 'spotify:track:67awxiNHNyjMXhVgsHuIrs', 'spotify:track:27jdUE1EYDSXZqhjuNxLem', 'spotify:track:1huvTbEYtgltjQRXzrNKGi', 'spotify:track:4pn0G7yHNfTgRYRWca8gYA', 'spotify:track:0N6Bxsif1tT4vHz8tnkjzP', 'spotify:track:2Oehrcv4Kov0SuIgWyQY9e', 'spotify:track:1KqlVt63Q4bl1VdSlymr5C', 'spotify:track:3D4QFgYa3P9P0gjmv4eX6I', 'spotify:track:5ymtzcwlS4rLXJ2PMlSNPr', 'spotify:track:3cHyrEgdyYRjgJKSOiOtcS', 'spotify:track:5j9iuo3tMmQIfnEEQOOjxh', 'spotify:track:519uJbE3zyKLlToVA65PrP', 'spotify:track:1iXBApi39l5r6lJj9WEXXS', 'spotify:track:3gbBpTdY8lnQwqxNCcf795', 'spotify:track:1mzGywacjpeik00PVLBPpF', 'spotify:track:5pY3ovFxbvAg7reGZjJQSp', 'spotify:track:0tJGzJjUVlEsn8s3Mn32Jb', 'spotify:track:2KlArcPWLSRhD5JWCxqwHh', 'spotify:track:1FsH6OZCKLWbBgqj8JcCvO', 'spotify:track:6DcDdDevI94Dh4vc5anXBE', 'spotify:track:3G6hD9B2ZHOsgf4WfNu7X1', 'spotify:track:0BhZWr9gPZNlVdWWigvYA9', 'spotify:track:57ef886Y0RQDGLm2jvmYEq', 'spotify:track:6g1NlCpW7fgqDnWbCCDrHl', 'spotify:track:0idc0XRnLRovVqpWnGQ6hC', 'spotify:track:6jizk5lOUnfpaZXYMdfeC6', 'spotify:track:4G8gkOterJn0Ywt6uhqbhp', 'spotify:track:2rJojRundKuKFgbvmCAYva', 'spotify:track:7DFNE7NO0raLIUbgzY2rzm', 'spotify:track:6NGet2NFndj4XvpjH9iMvb', 'spotify:track:1A2UmLDZzDmpdzUjEkCc3z', 'spotify:track:5fnA9mkIfScSqHIpeDyvck', 'spotify:track:5l3CML2OnzfNs5RfVgbcLt', 'spotify:track:4r8hRPbidDIoDPphxi78aY', 'spotify:track:72lvNqggmcOnS4C8XxZwuj', 'spotify:track:6jdOi5U5LBzQrc4c1VT983', 'spotify:track:3zKST4nk4QJE77oLjUZ0Ng', 'spotify:track:3bidbhpOYeV4knp8AIu8Xn', 'spotify:track:015IsLQFXbEm0f541N2qoX', 'spotify:track:2dLLR6qlu5UJ5gk0dKz0h3', 'spotify:track:0xCA70t1ZA4fa9UOE0lIJm', 'spotify:track:3rq5w4bQGigXOfdN30ATJt', 'spotify:track:1HNkqx9Ahdgi1Ixy2xkKkL', 'spotify:track:0zkiQH567SDLqfWNBaU3hv', 'spotify:track:3DmW6y7wTEYHJZlLo1r6XJ', 'spotify:track:5TvFfDlVoUWZvfqrhTJzD7', 'spotify:track:0ktV2JoOsoTGURzKaZnjJL', 'spotify:track:0qcr5FMsEO85NAQjrlDRKo', 'spotify:track:13qqdlSeF8FcxsRyapDMZ0', 'spotify:track:11SynawYlFYwzk3k9VARLV', 'spotify:track:48gsLPdOUEDjr7P8Wvykne', 'spotify:track:5U8hKxSaDXB8cVeLFQjvwx', 'spotify:track:0xMd5bcWTbyXS7wPrBtZA6', 'spotify:track:3wPPWcVuinAU7dXcJXtCID', 'spotify:track:0Rz1KXsP4bhGxs0ffySSSn', 'spotify:track:4Uc6BcPeBKfZUlX6jhumGv', 'spotify:track:7qfwcqfGOkQYtzjF4UzJHM', 'spotify:track:2Vogx6NbF6o4bfLhzKmo3O', 'spotify:track:0xIVvRmjztR1AwuHrkhH41', 'spotify:track:34gCuhDGsG4bRPIf9bb02f', 'spotify:track:0D2TtUbiX4QszhgMuye71Z', 'spotify:track:5EmCpD8tUj78VW3kgaEjME', 'spotify:track:1fzJyTCKeZuTSLByCsLRHl', 'spotify:track:0ZR9NFol0hcgLSVJoQmREl', 'spotify:track:6D5pfooPP6hi99RaXjkDsP', 'spotify:track:3qZkpG7RW81clweFyefCe2', 'spotify:track:2N8F9mupXs9oyCLeerRfCw', 'spotify:track:3bDGwl0X3EjQmIyFD1uif5', 'spotify:track:5v4sZRuvWDcisoOk1PFv6T', 'spotify:track:4eLSCSELtKxZwXnFbNLXT5', 'spotify:track:2FvE1VYiztTWlj3ivgMAeY', 'spotify:track:3zdv56EdfZi0ydbAZqbQ3M', 'spotify:track:2FiceoWDJ67rrmb5tGBpgE', 'spotify:track:3GKSfF6c3Rv3a1knSjxnXa', 'spotify:track:0cJLYpRTqODzv9SiQukE4Z', 'spotify:track:1Y7497MCCpZ19EuwIaqoZ0', 'spotify:track:2ia7iiEtpiOL2ZVuWxBZGB', 'spotify:track:2x4UdnjXPMMwjZtDTqpEjT', 'spotify:track:6zlOUIqcU6juXFww9UNpJK', 'spotify:track:5hTx6e0H4tQHiPyx5AuuwS', 'spotify:track:2Foc5Q5nqNiosCNqttzHof', 'spotify:track:1j8z4TTjJ1YOdoFEDwJTQa'];
+
+imgs = [];
+
+update_cover = function() {
+  var img, li_img, li_uid, rand, rand2;
+  rand = _.random(imgs.length - 20);
+  rand2 = _.random(imgs.length - 1);
+  li_uid = imgs[rand].uid;
+  li_img = imgs[rand2].img;
+  img = new Image;
+  img.src = li_img;
+  img.width = 200;
+  img.height = 200;
+  return $("#" + li_uid + " img").animate({
+    opacity: 0
+  }, 1000, function() {
+    $("#" + li_uid).html(img);
+    $("#" + li_uid + " img").css('opacity', '0');
+    return $("#" + li_uid + " img").animate({
+      opacity: 1
+    }, 1000);
+  });
 };
+
+tracks.forEach(function(el) {
+  return $.ajax({
+    url: "https://embed.spotify.com/oembed/?url=" + el + "&callback=callme",
+    type: 'GET',
+    crossDomain: true,
+    dataType: 'jsonp',
+    success: function(data) {
+      var img, randLetter, uid;
+      img = new Image;
+      img.src = data.thumbnail_url;
+      img.width = 200;
+      img.height = 200;
+      randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+      uid = randLetter + Date.now();
+      $('.background ul').append('<li id=\'' + uid + '\'></li>');
+      $('.background ul li:last-child').append(img);
+      return imgs.push({
+        img: img.src,
+        uid: uid
+      });
+    },
+    error: function(err) {
+      return console.log(err);
+    }
+  });
+});
+
+setInterval(update_cover, 500);
+
+
 
 },{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.coffee":[function(require,module,exports){
 module.exports = function(el) {
@@ -528,7 +644,7 @@ module.exports = function(el) {
     alignVert: false,
     widthOnly: true,
     reProcess: true,
-    maxFontSize: 180
+    maxFontSize: 80
   });
 };
 
@@ -545,7 +661,7 @@ require('./io.coffee').init({
   emitter: emitter
 });
 
-require('./views.js').init({
+require('./views.coffee').init({
   emitter: emitter
 });
 
@@ -553,12 +669,14 @@ require('./app.coffee').init({
   emitter: emitter
 });
 
+require('./components/dynamic_background.coffee');
+
 FastClick.attach(document.body);
 
 
 
-},{"./app.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.coffee","./io.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.coffee","./views.js":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views.js","events":"/Users/sijo/Projects/personal/spotify-quiz/quizify/node_modules/browserify/node_modules/events/events.js"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.coffee":[function(require,module,exports){
-var beginNewGame, bindEvents, emitter, error, gameOver, hostCheckAnswer, hostCountdownFinished, hostCreateNewGame, hostNextRound, hostRoomFull, init, onConnected, onNewGameCreated, onNewWordData, playerAnswer, playerJoinGame, playerJoinedRoom, playerRestart, socket;
+},{"./app.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.coffee","./components/dynamic_background.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/dynamic_background.coffee","./io.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.coffee","./views.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views.coffee","events":"/Users/sijo/Projects/personal/spotify-quiz/quizify/node_modules/browserify/node_modules/events/events.js"}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.coffee":[function(require,module,exports){
+var beginNewGame, bindEvents, emitter, error, gameOver, hostCheckAnswer, hostCountdownFinished, hostCreateNewGame, hostNextRound, hostShowAnswer, init, onConnected, onNewGameCreated, onNewWordData, playerAnswer, playerJoinGame, playerJoinedRoom, playerRejoin, roomReady, showingAnswer, socket;
 
 socket = '';
 
@@ -577,18 +695,21 @@ bindEvents = function() {
   socket.on('beginNewGame', beginNewGame);
   socket.on('newWordData', onNewWordData);
   socket.on('hostCheckAnswer', hostCheckAnswer);
+  socket.on('showingAnswer', showingAnswer);
   socket.on('gameOver', gameOver);
   socket.on('error', error);
   emitter.on('view/hostCreateNewGame', hostCreateNewGame);
   emitter.on('view/playerJoinGame', playerJoinGame);
-  emitter.on('host/hostRoomFull', hostRoomFull);
+  emitter.on('host/roomReady', roomReady);
   emitter.on('host/hostCountdownFinished', hostCountdownFinished);
+  emitter.on('host/showAnswer', hostShowAnswer);
   emitter.on('host/hostNextRound', hostNextRound);
+  emitter.on('player/roomReady', roomReady);
   emitter.on('player/playerAnswer', playerAnswer);
-  return emitter.on('player/playerRestart', playerRestart);
+  return emitter.on('player/playerRejoin', playerRejoin);
 };
 
-playerRestart = function(data) {
+playerRejoin = function(data) {
   return socket.emit('playerRestart', data);
 };
 
@@ -608,7 +729,11 @@ hostCountdownFinished = function(gameId) {
   return socket.emit('hostCountdownFinished', gameId);
 };
 
-hostRoomFull = function(gameId) {
+hostShowAnswer = function(gameId) {
+  return socket.emit('hostShowAnswer', gameId);
+};
+
+roomReady = function(gameId) {
   return socket.emit('hostRoomFull', gameId);
 };
 
@@ -640,6 +765,10 @@ hostCheckAnswer = function(data) {
   return emitter.emit('io/hostCheckAnswer', data);
 };
 
+showingAnswer = function(data) {
+  return emitter.emit('io/showingAnswer', data);
+};
+
 gameOver = function(data) {
   return emitter.emit('io/gameOver', data);
 };
@@ -654,198 +783,180 @@ module.exports = {
 
 
 
-},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views.js":[function(require,module,exports){
+},{}],"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views.coffee":[function(require,module,exports){
+var $el, bindDOMEvents, bindEmitterEvents, cacheElements, displayNewGameScreen, emitter, endGameHost, endGamePlayer, hostGameCountdown, hostShowAnswer, init, newWordHost, newWordPlayer, onCreateClick, onJoinClick, onPlayerAnswerClick, onPlayerJoinClick, onPlayerRejoin, onPlayerStartClick, playerGameCountdown, playerShowAnswer, render, showInitScreen, textfit, updateHostWaitingScreen, updatePlayerWaitingScreen;
 
-var textfit = require('./components/js/textfit.js');
+textfit = require('./components/textfit.coffee');
 
-module.exports = {
-  init: init
-};
+$el = {};
 
-var $el = {};
-var emitter = '';
+emitter = void 0;
 
-function init (data) {
+init = function(data) {
   emitter = data.emitter;
-
   cacheElements();
   bindDOMEvents();
   bindEmitterEvents();
+  return showInitScreen();
+};
 
-  showInitScreen();
-}
-
-function cacheElements () {
+cacheElements = function() {
   $el.doc = $(document);
   $el.gameArea = $('#gameArea');
   $el.templateIntroScreen = $('#intro-screen-template').html();
   $el.templateNewGame = $('#create-game-template').html();
   $el.templateJoinGame = $('#join-game-template').html();
-  $el.hostGame = $('#host-game-template').html();
-}
+  return $el.hostGame = _.template($('#host-game-template').html());
+};
 
-function bindDOMEvents () {
-  $el.doc
-    .on('click', '#btnCreateGame', onCreateClick)
-    .on('click', '#btnJoinGame', onJoinClick)
-    .on('click', '#btnStart', onPlayerStartClick)
-    .on('click', '.btnAnswer', onPlayerAnswerClick)
-    .on('click', '#btnPlayerRestart', onPlayerRestart);
-}
+bindDOMEvents = function() {
+  return $el.doc.on('click', '#btnCreateGame', onCreateClick).on('click', '#btnJoinGame', onJoinClick).on('click', '#btnJoin', onPlayerJoinClick).on('click', '#btnStart', onPlayerStartClick).on('click', '.btnAnswer', onPlayerAnswerClick).on('click', '#btnPlayerRejoin', onPlayerRejoin);
+};
 
-function bindEmitterEvents () {
-  emitter
-    .on('host/displayNewGameScreen', displayNewGameScreen)
-    .on('host/playerJoinedRoom', updateHostWaitingScreen)
-    .on('host/gameCountdown', hostGameCountdown)
-    .on('host/newWord', newWordHost)
-    .on('host/endGame', endGameHost)
+bindEmitterEvents = function() {
+  return emitter.on('host/displayNewGameScreen', displayNewGameScreen).on('host/playerJoinedRoom', updateHostWaitingScreen).on('host/gameCountdown', hostGameCountdown).on('host/showAnswer', hostShowAnswer).on('host/newWord', newWordHost).on('host/endGame', endGameHost).on('player/playerJoinedRoom', updatePlayerWaitingScreen).on('player/gameCountdown', playerGameCountdown).on('player/showAnswer', playerShowAnswer).on('player/newWord', newWordPlayer).on('player/endGame', endGamePlayer);
+};
 
-    .on('player/playerJoinedRoom', updatePlayerWaitingScreen)
-    .on('player/gameCountdown', playerGameCountdown)
-    .on('player/newWord', newWordPlayer)
-}
-
-function endGameHost (data) {
-  // Get the data for player 1 from the host screen
-  var $p1 = $('#player1Score');
-  var p1Score = +$p1.find('.score').text();
-  var p1Name = $p1.find('.playerName').text();
-
-  // Get the data for player 2 from the host screen
-  var $p2 = $('#player2Score');
-  var p2Score = +$p2.find('.score').text();
-  var p2Name = $p2.find('.playerName').text();
-
-  // Find the winner based on the scores
-  var winner = (p1Score < p2Score) ? p2Name : p1Name;
-  var tie = (p1Score === p2Score);
-
-  // Display the winner (or tie game message)
-  if (tie) {
-      $('#hostWord').text("It's a Tie!");
-  } else {
-      $('#hostWord').text(winner + ' Wins!!');
-  }
-  textfit('#hostWord');
-}
-
-function endGamePlayer (data) {
-  $button = $('<button>Start Again</button>')
-              .attr('id', 'btnPlayerRestart')
-              .addClass('btn')
-              .addClass('btnGameOver');
-
-  render('<div class="gameOver">Game Over!</div>', $button);
-}
-
-function newWordHost(word) {
-  $('#hostWord').text(word);
-  textfit('#hostWord');
-}
-
-function newWordPlayer(list) {
-  var $list = $('<ul/>').attr('id', 'ulAnswers');
-
-  $.each(list, function() {
-    $list
-      .append($('<li/>')
-      .append($('<button/>')
-        .addClass('btnAnswer')
-        .addClass('btn')
-        .val(this)
-        .html(this)
-      )
-    );
+endGameHost = function() {
+  var list, tie, winner;
+  $('.artist, .song, .cover').hide();
+  list = [];
+  $('.playerScore').each(function(i) {
+    var $score, name, score;
+    $score = $(this);
+    score = +$score.find('.score').text();
+    name = $score.find('.playerName').text();
+    return list.push({
+      name: name,
+      score: score
+    });
   });
+  winner = list.length > 1 ? _.max(list, 'score').name : list[0].name;
+  tie = false;
+  if (tie) {
+    $('#hostWord').text('It\'s a Tie!');
+  } else {
+    $('#hostWord').text(winner + " Wins!!");
+  }
+  return textfit('#hostWord');
+};
 
-  render($list);
-}
+endGamePlayer = function(data) {
+  var $button;
+  $button = $('<button>Play Again</button>').attr('id', 'btnPlayerRejoin').addClass('btn').addClass('btnGameOver');
+  return render('<div class="gameOver">Game Over!</div>', $button);
+};
 
-function showInitScreen() {
-    render($el.templateIntroScreen);
-    textfit('.title');
-}
+newWordHost = function(word) {
+  $('#hostWord').text(word);
+  $('.artist, .song, .cover').hide();
+  return textfit('#hostWord');
+};
 
-function displayNewGameScreen(gameId) {
-    render($el.templateNewGame);
+newWordPlayer = function(list) {
+  var $list;
+  $list = $('<ul/>').attr('id', 'ulAnswers');
+  $.each(list, function() {
+    var $button;
+    $button = $('<button/>').addClass('btnAnswer').addClass('btn').val(this).html(this);
+    return $list.append($('<li/>').append($button));
+  });
+  return render($list);
+};
 
-    // Visa lokala/publika ip?
-    $('#gameURL').text(window.location.href);
-    textfit('#gameURL');
+showInitScreen = function() {
+  return render($el.templateIntroScreen);
+};
 
-    $('#spanNewGameCode').text(gameId);
-}
+displayNewGameScreen = function(gameId) {
+  var port;
+  render($el.templateNewGame);
+  port = window.location.port ? ":" + window.location.port : void 0;
+  $('#gameURL').text("" + window.location.hostname + port);
+  textfit('#gameURL');
+  return $('#spanNewGameCode').text(gameId);
+};
 
-function hostGameCountdown (players) {
-  render($el.hostGame);
-  textfit('#hostWord');
+hostGameCountdown = function(players) {
+  render($el.hostGame({
+    players: players
+  }));
+  return textfit('#hostWord');
+};
 
-  // Display the players' names on screen
-  $('#player1Score')
-      .find('.playerName')
-      .html(players[0].playerName);
+hostShowAnswer = function(data) {
+  $('.artist').text(data.artist);
+  $('.song').text(data.song);
+  $('.cover').attr('src', data.cover);
+  return $('.artist, .song, .cover').show();
+};
 
-  $('#player2Score')
-      .find('.playerName')
-      .html(players[1].playerName);
+playerShowAnswer = function(data) {
+  return $('#gameArea').html('<div class="gameOver">Get Ready for the next round!</div>');
+};
 
-  // Set the Score section on screen to 0 for each player.
-  $('#player1Score').find('.score').attr('id', players[0].mySocketId);
-  $('#player2Score').find('.score').attr('id', players[1].mySocketId);
+playerGameCountdown = function() {
+  return $('#gameArea').html('<div class="gameOver">Get Ready!</div>');
+};
 
-}
+updateHostWaitingScreen = function(playerName) {
+  return $('#playersWaiting').append('<p/>').text("Player " + playerName + " joined the game.");
+};
 
-function playerGameCountdown () {
-  $('#gameArea')
-      .html('<div class="gameOver">Get Ready!</div>');
-}
+updatePlayerWaitingScreen = function(gameId) {
+  var msg;
+  $('#btnJoin').addClass('hide');
+  $('#btnStart').removeClass('hide');
+  msg = "<b>Joined Game " + gameId + ".</b> <br/> Wait for other players to join, then press start.";
+  return $('#playerWaitingMessage p').html(msg);
+};
 
-function updateHostWaitingScreen (playerName) {
-  $('#playersWaiting')
-    .append('<p/>')
-    .text('Player ' + playerName + ' joined the game.');
-}
+onCreateClick = function() {
+  return emitter.emit('view/hostCreateNewGame');
+};
 
-function updatePlayerWaitingScreen (gameId) {
-  console.log(gameId);
-  $('#playerWaitingMessage')
-    .append('<p/>')
-    .text('Joined Game ' + gameId + '. Please wait for game to begin.');
+onJoinClick = function() {
+  return render($el.templateJoinGame);
+};
 
-}
-
-function onCreateClick() {
-  emitter.emit('view/hostCreateNewGame');
-}
-
-function onJoinClick() {
-  render($el.templateJoinGame);
-}
-
-function onPlayerStartClick() {
-  var data = {
-      gameId: +($('#inputGameId').val()),
-      playerName: $('#inputPlayerName').val() || 'anon'
+onPlayerJoinClick = function() {
+  var data;
+  data = {
+    gameId: +$('#inputGameId').val(),
+    playerName: $('#inputPlayerName').val() || _.sample(['Elvis', 'Madonna', 'Chaka', 'Gaga', 'Queen b'])
   };
-  emitter.emit('view/playerJoinGame', data);
-}
+  return emitter.emit('view/playerJoinGame', data);
+};
 
-function onPlayerAnswerClick() {
-  var $btn = $(this);
-  var answer = $btn.val();
-  emitter.emit('view/playerAnswer', answer);
-}
+onPlayerStartClick = function() {
+  return emitter.emit('player/startGame');
+};
 
-function onPlayerRestart() {
-  emitter.emit('view/playerRestart');
-  render("<h3>Waiting on host to start new game.</h3>");
-}
+onPlayerAnswerClick = function() {
+  var $btn, answer;
+  $btn = $(this);
+  if (!$btn.hasClass('disable')) {
+    answer = $btn.val();
+    $btn.addClass('disable');
+    return emitter.emit('view/playerAnswer', answer);
+  }
+};
 
-function render (template, appendix) {
-  $el.gameArea
-    .html(template)
-    .append(appendix);
-}
+onPlayerRejoin = function() {
+  var $button;
+  emitter.emit('view/playerRejoin');
+  $button = $('<button>Start!</button>').attr('id', 'btnStart').addClass('btn');
+  return render('<h3>Wait for other players to join, then press start.</h3>', $button);
+};
 
-},{"./components/js/textfit.js":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/js/textfit.js"}]},{},["/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/index.coffee"]);
+render = function(template, appendix) {
+  return $el.gameArea.html(template).append(appendix);
+};
+
+module.exports = {
+  init: init
+};
+
+
+
+},{"./components/textfit.coffee":"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.coffee"}]},{},["/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/index.coffee"]);

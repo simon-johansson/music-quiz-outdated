@@ -1,0 +1,75 @@
+// join-game-template
+// create-game-template
+
+.createGameWrapper,
+.joinGameWrapper,
+.gameOver {
+  font-family: $main-font;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.joinGameWrapper,
+.createGameWrapper {
+  .info {
+    color: $spotify-white;
+    font-weight: 400;
+    margin-top: 1.5em;
+    font-size: 1.5em;
+    padding-top: 1%;
+  }
+}
+
+.createGameWrapper {
+  color: $spotify-green;
+  font-weight: 300;
+
+  #gameURL {
+    font-size: 4em;
+  }
+
+  .gameId {
+    font-size: 8em;
+  }
+}
+
+.joinGameWrapper {
+  padding: 0;
+  height: 100%;
+  min-height: 320px;
+
+  .btn {
+    width: 100%;
+    height: 100px;
+    @media screen and (max-width: $break-small) {
+      height: 80px;
+    }
+  }
+
+  #playerWaitingMessage {
+    font-size: .8em;
+  }
+
+  label {
+    display: block;
+  }
+
+  input {
+    text-align: center;
+    padding: 10px;
+    width: 200px;
+    height: 60px;
+    font-family: $main-font;
+    color: $spotify-green;
+    font-weight: 300;
+    font-size: 54px;
+    border: 1px dotted white;
+    border-radius: 10px;
+    background: transparent;
+
+    &#inputPlayerName {
+      width: 90%;
+    }
+  }
+}
+
