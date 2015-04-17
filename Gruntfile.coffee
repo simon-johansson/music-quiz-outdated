@@ -81,14 +81,14 @@ module.exports = (grunt)->
         src: 'public/scripts/index.coffee'
         dest: 'public/bundle.js'
         options:
-          transform: ['coffeeify']
+          transform: ['coffee-reactify', 'reactify']
 
       dev:
         src: 'public/scripts/index.coffee'
         dest: 'public/bundle.js'
         options:
           watch: true
-          transform: ['coffeeify']
+          transform: ['coffee-reactify', 'reactify']
 
   grunt.registerTask 'default', [
     'browserify:compile'
