@@ -1,7 +1,10 @@
+
 var path = require('path');
 
 var debug = require('debug')('http');
 var express = require('express');
+
+var spotify = require('./components/spotify');
 
 // Create a new instance of Express
 var app = express();
@@ -15,6 +18,12 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 // Create a Node.js based http server on port 8080
 var server = require('http').createServer(app).listen(app.get('port'), function () {
   debug('listening on port ' + app.get('port'));
+});
+
+app.get('/covers', function (req, res) {
+  spotify.getAlbumCovers(function (data) {
+    res.json(data.body.tracks.items);
+  });
 });
 
 // Create a Socket.IO server and attach it to the http server
