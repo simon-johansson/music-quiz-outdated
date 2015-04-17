@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "browserify": "^9.0.8",
+    "coffee-reactify": "^3.0.0",
     "coffee-script": "^1.9.1",
     "coffeeify": "^1.0.0",
     "grunt": "~0.4.5",
@@ -19,7 +20,9 @@
     "grunt-contrib-sass": "^0.9.2",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-nodemon": "^0.4.0",
-    "load-grunt-tasks": "^3.1.0"
+    "load-grunt-tasks": "^3.1.0",
+    "react": "^0.13.1",
+    "reactify": "^1.1.0"
   },
   "main": "server/index.js"
 }
