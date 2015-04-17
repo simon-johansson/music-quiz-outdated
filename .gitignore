@@ -1,7 +1,13 @@
 node_modules/
+.sass-cache/
 
 *.sublime-workspace
 *.sublime-project
 *.log
+*.map
+*.css
+
+bundle.js
+
 
 TODO.md
