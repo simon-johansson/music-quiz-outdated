@@ -25,4 +25,9 @@
     "reactify": "^1.1.0"
   },
   "main": "server/index.js"
+  "main": "server/index.js",
+  "scripts":{
+    "compile": "grunt",
+    "start": "node_modules/.bin/coffee server/"
+  }
 }
