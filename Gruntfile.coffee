@@ -41,35 +41,42 @@ module.exports = (grunt)->
       options:
         spawn: false
         livereload: true
-
       # scripts:
       #   files: ['public/bundle.js']
-
       # markup:
       #   files: ['public/*/**.html']
-
       # styles:
       #   files: ['public/styles.css']
-
       scss:
         options:
           livereload: false
         files: ['public/scss/**/*.scss']
         tasks: ['sass']
-
-    nodemon:
-      dev:
-        script: 'server/'
+      express:
         options:
-          args: ['']
-          nodeArgs: ['']
-          env:
-            PORT: '8080'
-            DEBUG: 'http'
+          livereload: true
+          nospawn: true
+        files: ['server/**/*.coffee']
+        tasks: ['express:dev', 'wait']
+
+    express:
+      options:
+        port: process.env.PORT || 3000
+        opts: ['node_modules/coffee-script/bin/coffee']
+      dev:
+        options:
+          script: 'server/index.coffee'
+          debug: true
+
+    env:
+      dev:
+        NODE_ENV: 'development'
+      prod:
+        NODE_ENV: 'production'
 
     sass:
-      # options:
-        # sourcemap: true
+      options:
+        sourceMap: true
       public:
         files:
           'public/styles.css': 'public/scss/app.scss'
@@ -77,18 +84,25 @@ module.exports = (grunt)->
     # clean: ['dist/']
 
     browserify:
+      options:
+        transform: ['coffee-reactify', 'reactify']
       compile:
         src: 'public/scripts/index.coffee'
         dest: 'public/bundle.js'
-        options:
-          transform: ['coffee-reactify', 'reactify']
-
       dev:
-        src: 'public/scripts/index.coffee'
-        dest: 'public/bundle.js'
+        src: '<%= browserify.compile.src %>'
+        dest: '<%= browserify.compile.dest %>'
         options:
           watch: true
-          transform: ['coffee-reactify', 'reactify']
+
+  grunt.registerTask 'wait', ->
+    grunt.log.ok 'Waiting for server reload...'
+    done = this.async()
+    setTimeout ->
+      grunt.log.writeln 'Done waiting!'
+      done()
+    , 1500
+
 
   grunt.registerTask 'default', [
     'browserify:compile'
@@ -96,8 +110,10 @@ module.exports = (grunt)->
   ]
 
   grunt.registerTask 'dev', [
+    'env:dev'
     'browserify'
     'sass'
+    'express:dev'
+    'wait'
     'watch'
-    # 'nodemon'
   ]
