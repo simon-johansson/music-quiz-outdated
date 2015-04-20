@@ -41,21 +41,14 @@ module.exports = (grunt)->
       options:
         spawn: false
         livereload: true
-      # scripts:
-      #   files: ['public/bundle.js']
-      # markup:
-      #   files: ['public/*/**.html']
-      # styles:
-      #   files: ['public/styles.css']
+      livereload:
+        files: ['public/**/*.{css,js,html}']
       scss:
-        options:
-          livereload: false
+        options: livereload: false
         files: ['public/scss/**/*.scss']
         tasks: ['sass']
       express:
-        options:
-          livereload: true
-          nospawn: true
+        options: nospawn: true
         files: ['server/**/*.coffee']
         tasks: ['express:dev', 'wait']
 
@@ -63,10 +56,10 @@ module.exports = (grunt)->
       options:
         port: process.env.PORT || 3000
         opts: ['node_modules/coffee-script/bin/coffee']
+        debug: true
       dev:
         options:
           script: 'server/index.coffee'
-          debug: true
 
     env:
       dev:
@@ -94,6 +87,12 @@ module.exports = (grunt)->
         dest: '<%= browserify.compile.dest %>'
         options:
           watch: true
+          browserifyOptions:
+            debug: true
+
+    # extract_sourcemap:
+    #     files:
+    #       'public/bundle.js.map': ['public/bundle.js']
 
   grunt.registerTask 'wait', ->
     grunt.log.ok 'Waiting for server reload...'

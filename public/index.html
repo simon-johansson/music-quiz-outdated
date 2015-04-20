@@ -14,15 +14,12 @@
 
 <body>
 
+  <div id="bg"></div>
+
   <div id="gameArea"></div>
 
   <!-- Main Title Screen that appears when the page loads for the first time -->
   <script id="intro-screen-template" type="text/template">
-
-    <div class="background">
-      <ul></ul>
-    </div>
-    <div class="grad"></div>
 
     <div class="titleWrapper">
 
@@ -105,6 +102,9 @@
   <script src="libs/textfit/textFit.min.js"></script>
   <script src="libs/fastclick.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+
+  <!-- LiveReoad should preferably be injected dynamically, test after express has been upgraded to 4.x -->
+  <script src="//localhost:35729/livereload.js"></script>
 
   <script src="bundle.js"></script>
 
