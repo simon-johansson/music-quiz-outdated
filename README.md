@@ -28,6 +28,9 @@ There is *sometimes* a working demo up at http://quizify.trol.la - but no guaran
 
 Preform steps 1-6 above. Run `grunt dev` to start the development server and watch for file changes. Changes to files will trigger the server to restart and SCSS/CoffeeScript files to be recompiled.
 
+## Contributing
+
+If your interested in contributing then please do so! Raise an issue in the tracker if you have ideas for improvements or new features. Or better yet, fork the repo and make pull requests (would be awesome!)
 
 <!-- ## To Play locally
 
