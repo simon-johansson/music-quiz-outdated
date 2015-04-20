@@ -3,12 +3,12 @@
 React = require 'react/addons'
 TimeoutTransitionGroup = require '../../libs/timeout-transition-group.jsx'
 
-Tile = React.createClass
+class Tile extends React.Component
   render: ->
     src = @props.src
     (
       <li className="album-cover">
-        <TimeoutTransitionGroup transitionName="example"
+        <TimeoutTransitionGroup transitionName="album-spinner"
                                 enterTimeout={800}
                                 leaveTimeout={500}>
           <img src={src} width="200" height="200" key={src} />
@@ -16,26 +16,30 @@ Tile = React.createClass
       </li>
     )
 
-Tiles = React.createClass
-  propTypes:
+class Tiles extends React.Component
+  propType:
     data: React.PropTypes.array
 
-  tilesOnScreen: ->
-    Math.floor((window.innerHeight * window.innerWidth) / (200 * 200)) + 5
+  tilesVisibleOnScreen: ->
+    buffer = 5
+    Math.floor((window.innerHeight * window.innerWidth) / (200 * 200)) + buffer
 
   render: ->
-    tileNodes = @props.data.map (track, index) =>
+    subset = @props.data.slice 0, @tilesVisibleOnScreen()
+    tileNodes = subset.map (track, index) =>
       (
         <Tile src={track.imageSrc} key={index} ></Tile>
       )
     (
       <ul>
-        {tileNodes}
+        <TimeoutTransitionGroup transitionName="album-spinner"
+                                enterTimeout={800}>
+          {tileNodes}
+        </TimeoutTransitionGroup>
       </ul>
     )
 
 SpotifyBackground = React.createClass
-
   loadAlbumCoversFromServer: ->
     $.ajax
       url: @props.url
@@ -51,26 +55,30 @@ SpotifyBackground = React.createClass
   getInitialState: ->
     {data: []}
 
-  animate: ->
+  animateTile: ->
     unless @state.spinner.length
       @setState {spinner: _.cloneDeep @state.data}
-    # console.log @state.data.length
-    # console.log @state.spinner.length
     spinnerCopy = _.cloneDeep @state.spinner
-    dataCopy = _.cloneDeep @state.data
+    dataCopy    = _.cloneDeep @state.data
     dataCopy[_.random(dataCopy.length - 1)] = spinnerCopy.pop()
     @setState {spinner: spinnerCopy, data: dataCopy}
 
   componentDidMount: ->
     @loadAlbumCoversFromServer()
-    setInterval @animate, _.random(1500, 1700)
+    setInterval @animateTile, _.random(1500, 1700)
 
   render: ->
     (
-      <div className="background">
+      <div className="dynamic-background">
         <Tiles data={this.state.data} />
+        <div className="gradient-overlay"></div>
       </div>
     )
+
+React.render(
+  <SpotifyBackground url="/covers" />,
+  $('#bg')[0]
+)
 
 module.exports = SpotifyBackground
 

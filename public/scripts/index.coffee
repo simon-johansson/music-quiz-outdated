@@ -5,6 +5,6 @@ require('./io.coffee').init emitter: emitter
 require('./views.coffee').init emitter: emitter
 require('./app.coffee').init emitter: emitter
 
-require './components/dynamic_background.coffee'
+SpotifyBackground = require './views/SpotifyBackground.cjsx'
 
 FastClick.attach document.body
