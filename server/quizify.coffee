@@ -1,6 +1,7 @@
 
 debug = require('debug')('game')
 _ = require('lodash')
+
 spotify = require('./components/spotify.coffee')
 
 io = undefined
