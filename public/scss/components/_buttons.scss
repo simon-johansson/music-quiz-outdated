@@ -1,21 +1,7 @@
-.a-button {
-  // position: absolute;
-  // top: 2em;
-  // left: 2em;
-  // z-index: 10;
-  padding: 1em 2em;
-  border-width: 0;
-  border-radius: 500px;
-  font-size: .8em;
-  color: white;
-  cursor: pointer;
-  outline: 0;
-}
 
 .btn {
   display: inline-block;
   border-radius: 500px;
-  // height: 100%;
   width: 49%;
   margin-bottom: 0;
   color: $spotify-white;
@@ -36,6 +22,15 @@
   -o-user-select: none;
   user-select: none;
   transition: background-color .15s ease;
+
+  &.large {
+    max-width: 300px;
+    height: 100px;
+    @media screen and (max-width: $break-small) {
+      height: 80px;
+      font-size: 30px;
+    }
+  }
 
   @media screen and (max-width: $break-small) {
     font-size: 30px;

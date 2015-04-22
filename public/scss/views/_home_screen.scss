@@ -1,0 +1,53 @@
+
+.home-screen {
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+
+  .title-wrapper {
+    font-family: $main-font;
+    position: absolute;
+    height: 50%;
+    width: 96%;
+    margin: auto;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    right: 0;
+
+    .title {
+      margin: 0 auto 20px;
+      text-align: center;
+      width: 100%;
+
+      h1 {
+        font-family: $main-font;
+        color: $spotify-white;
+        font-weight: 300;
+        font-size: 180px;
+        margin: 20px auto;
+        @media screen and (max-width: $break-small) {
+          font-size: 80px;
+        }
+      }
+    }
+
+    .buttons {
+      width: 100%;
+      text-align: center;
+
+      .btn {
+        @extend .large;
+      }
+
+      a:first-child {
+        margin-right: 20px;
+        @media screen and (max-width: $break-small) {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+

@@ -31,7 +31,7 @@ class Tiles extends React.Component
         <Tile src={track.imageSrc} key={index} ></Tile>
       )
     (
-      <ul>
+      <ul className="album-covers">
         <TimeoutTransitionGroup transitionName="album-spinner"
                                 enterTimeout={800}>
           {tileNodes}
@@ -74,11 +74,6 @@ SpotifyBackground = React.createClass
         <div className="gradient-overlay"></div>
       </div>
     )
-
-React.render(
-  <SpotifyBackground url="/covers" />,
-  $('#bg')[0]
-)
 
 module.exports = SpotifyBackground
 

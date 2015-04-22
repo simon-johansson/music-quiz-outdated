@@ -39,24 +39,28 @@ module.exports = (grunt)->
 
     watch:
       options:
-        spawn: false
+        spawn: true
         livereload: true
-      livereload:
-        files: ['public/**/*.{css,js,html}']
       scss:
         options: livereload: false
         files: ['public/scss/**/*.scss']
         tasks: ['sass']
       express:
-        options: nospawn: true
+        options: spawn: false
         files: ['server/**/*.coffee']
         tasks: ['express:dev', 'wait']
+      public:
+        files: [
+          'public/styles.css'
+          'public/bundle.js'
+          'public/index.html'
+        ]
 
     express:
       options:
         port: process.env.PORT || 3000
         opts: ['node_modules/coffee-script/bin/coffee']
-        debug: true
+        # debug: true
       dev:
         options:
           script: 'server/index.coffee'
@@ -64,6 +68,7 @@ module.exports = (grunt)->
     env:
       dev:
         NODE_ENV: 'development'
+        # DEBUG: '*'
       prod:
         NODE_ENV: 'production'
 
@@ -80,7 +85,7 @@ module.exports = (grunt)->
       options:
         transform: ['coffee-reactify', 'reactify']
       compile:
-        src: 'public/scripts/index.coffee'
+        src: 'public/flux/index.cjsx'
         dest: 'public/bundle.js'
       dev:
         src: '<%= browserify.compile.src %>'
@@ -102,15 +107,15 @@ module.exports = (grunt)->
       done()
     , 1500
 
-
   grunt.registerTask 'default', [
+    'env:prod'
     'browserify:compile'
     'sass'
   ]
 
   grunt.registerTask 'dev', [
     'env:dev'
-    'browserify'
+    'browserify:dev'
     'sass'
     'express:dev'
     'wait'
