@@ -1,0 +1,19 @@
+@import 'variables';
+@import 'mixins';
+
+@import 'components/utils';
+@import 'components/buttons';
+@import 'components/dynamic_background';
+
+@import 'views/home_screen';
+@import 'views/join_create_screen';
+@import 'views/game_screen';
+@import 'views/host_screen';
+
+html, body {
+    @include top-right-bottom-left();
+    font-family: $main-font;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}

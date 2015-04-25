@@ -1,0 +1,7 @@
+@mixin top-right-bottom-left ($t: 0, $r: 0, $b: 0, $l: 0) {
+  bottom: $b;
+  left: $l;
+  position: absolute;
+  right: $r;
+  top: $t;
+}

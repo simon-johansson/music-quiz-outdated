@@ -1,0 +1,2573 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"get",
+				"getElementById"
+			],
+			[
+				"pub",
+				"public/"
+			],
+			[
+				"poi",
+				"position"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"parse",
+				"parseResponse"
+			],
+			[
+				"rel",
+				"relative"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"tex",
+				"text-align"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"max-",
+				"max-width"
+			],
+			[
+				"title",
+				"_title_screen.scss"
+			],
+			[
+				"com",
+				"components/"
+			],
+			[
+				"endGame",
+				"endGamePlayer"
+			],
+			[
+				"newWord",
+				"newWordData"
+			],
+			[
+				"templa",
+				"templates"
+			],
+			[
+				"exptobe",
+				"expect.to.be.an"
+			],
+			[
+				"exhaprop",
+				"expect.to.have.property"
+			],
+			[
+				"expetohapro",
+				"expect.to.have.property"
+			],
+			[
+				"exceteq",
+				"expect.to.eql"
+			],
+			[
+				"exp",
+				"expect.to.be.an"
+			],
+			[
+				"exptonot",
+				"expect.to.not.throw"
+			],
+			[
+				"last",
+				"lastName"
+			],
+			[
+				"fist",
+				"firstName"
+			],
+			[
+				"expeq",
+				"expect.to.eql"
+			],
+			[
+				"exth",
+				"expect.to.not.throw"
+			],
+			[
+				"expebe",
+				"expect.to.be.an"
+			],
+			[
+				"key",
+				"keyfinder"
+			],
+			[
+				"plu",
+				"pluckRecursive"
+			],
+			[
+				"exeq",
+				"expect.to.eql"
+			],
+			[
+				"null",
+				"expect.to.be.null"
+			],
+			[
+				"expem",
+				"expect.to.be.empty"
+			],
+			[
+				"Tra",
+				"TrafficSituation"
+			],
+			[
+				"create",
+				"createErrorMessage"
+			],
+			[
+				"res",
+				"response"
+			],
+			[
+				"expenot",
+				"expect.to.not.throw"
+			],
+			[
+				"location",
+				"locationLookup"
+			],
+			[
+				"api",
+				"api_key"
+			],
+			[
+				"de",
+				"device"
+			],
+			[
+				"first",
+				"firstName"
+			],
+			[
+				"desc",
+				"description"
+			],
+			[
+				"req",
+				"require"
+			],
+			[
+				"help",
+				"helper"
+			],
+			[
+				"expe",
+				"expect.to.be.a"
+			],
+			[
+				"script",
+				"scriptPath"
+			],
+			[
+				"re",
+				"require"
+			],
+			[
+				"co",
+				"columns"
+			],
+			[
+				"func",
+				"function"
+			],
+			[
+				"insert",
+				"insertBefore  (function)"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"list",
+				"list-style"
+			],
+			[
+				"margin-",
+				"margin-top"
+			],
+			[
+				"css",
+				"css	.css() - single"
+			],
+			[
+				"fot-",
+				"font-weight"
+			],
+			[
+				"a",
+				"$apply	AngularJS"
+			],
+			[
+				"slide",
+				"slideshowFn()"
+			],
+			[
+				"new",
+				"vm.runInNewContext();"
+			],
+			[
+				"overf",
+				"overflow-y"
+			],
+			[
+				"inine",
+				"inline-block"
+			],
+			[
+				"kyst",
+				"keystone"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"not",
+				"notHideWhenClicked	(str)"
+			],
+			[
+				"togg",
+				"toggleClass	.toggleClass()"
+			],
+			[
+				"add",
+				"addback	.addBack()"
+			],
+			[
+				"lin",
+				"inline-block"
+			],
+			[
+				"ui",
+				"ui_sdk_tabs.less"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"ui_",
+				"ui_sdk_modals.less"
+			],
+			[
+				"backgroun",
+				"background-image"
+			],
+			[
+				"font-s",
+				"font-size"
+			],
+			[
+				"padding",
+				"padding-top"
+			],
+			[
+				"back",
+				"background-image"
+			],
+			[
+				"s",
+				"static/"
+			],
+			[
+				"STA",
+				"STATIC_URL"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Gruntfile.coffee",
+			"settings":
+			{
+				"buffer_size": 9850,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "client/index.html",
+			"settings":
+			{
+				"buffer_size": 3429,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "client/app/flux/index.cjsx",
+			"settings":
+			{
+				"buffer_size": 242,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "bower.json",
+			"settings":
+			{
+				"buffer_size": 99,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/config/local.env.js",
+			"settings":
+			{
+				"buffer_size": 634,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "package.json",
+			"settings":
+			{
+				"buffer_size": 2851,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "server/components/spotify/index.js",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "TODO.md",
+			"settings":
+			{
+				"buffer_size": 596,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 109,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Nodejs/Nodejs.sublime-build",
+					""
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				],
+				[
+					"Packages/User/mochaTest.sublime-build",
+					""
+				],
+				[
+					"Packages/User/node.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Nodejs/Nodejs.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"last_filter": "coffee",
+		"selected_items":
+		[
+			[
+				"coffee",
+				"Set Syntax: CoffeeScript"
+			],
+			[
+				"move",
+				"File: Move"
+			],
+			[
+				"jsx",
+				"Set Syntax: JSX"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"finder",
+				"Finder: Open here"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"reinde",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"rename",
+				"File: Rename"
+			],
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"discover",
+				"Package Control: Discover Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"preview",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"dup",
+				"File: Duplicate"
+			],
+			[
+				"pview",
+				"PackageResourceViewer: Extract Package"
+			],
+			[
+				"reind",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"reinden",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"delete",
+				"File: Delete"
+			],
+			[
+				"delet",
+				"File: Delete"
+			],
+			[
+				"duplica",
+				"File: Duplicate"
+			],
+			[
+				"previ",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"prev",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"preview ",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"open",
+				"File: Open In Browser - Production Server"
+			],
+			[
+				"delte",
+				"File: Delete"
+			],
+			[
+				"ope",
+				"File: Open In Browser - Production Server"
+			],
+			[
+				"markdow",
+				"Set Syntax: Markdown"
+			],
+			[
+				"dupl",
+				"File: Duplicate"
+			],
+			[
+				"rena",
+				"File: Rename"
+			],
+			[
+				"java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"dele",
+				"File: Delete"
+			],
+			[
+				"dupli",
+				"File: Duplicate"
+			],
+			[
+				"node event",
+				"Snippet: Snippet: NodeJS EventEmitter"
+			],
+			[
+				"node",
+				"Snippet: Snippet: NodeJS EventEmitter"
+			],
+			[
+				"remove pa",
+				"Package Control: Remove Package"
+			],
+			[
+				"floo jo",
+				"Floobits - Join Workspace"
+			],
+			[
+				"floo",
+				"Floobits - Share Directory (Public)"
+			],
+			[
+				"ren",
+				"File: Rename"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"disabl",
+				"Package Control: Disable Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"javascript",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"pretty",
+				"HTMLPrettify: Set Prettify Preferences"
+			],
+			[
+				"wrap",
+				"Word Wrap: Toggle"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"dash",
+				"DashDoc: invoke Dash with selected word"
+			],
+			[
+				"spellin",
+				"Spelling: Spell Check"
+			],
+			[
+				"spelling",
+				"Spelling: Spell Check"
+			],
+			[
+				"keybind",
+				"Preferences: Key Bindings - Default"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"open ",
+				"File: Open In Browser - Production Server"
+			],
+			[
+				"django",
+				"Set Syntax: HTML (Django)"
+			],
+			[
+				"dajgo",
+				"Set Syntax: Python Django"
+			],
+			[
+				"jae",
+				"Set Syntax: Jade"
+			],
+			[
+				"preference user",
+				"Preferences: Settings - User"
+			],
+			[
+				"jade",
+				"Set Syntax: Jade"
+			],
+			[
+				"discov",
+				"Package Control: Discover Packages"
+			],
+			[
+				"replace",
+				"Replace"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"term",
+				"Preferences: Terminal Settings – User"
+			],
+			[
+				"javas",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"syntax html",
+				"Set Syntax: HTML"
+			],
+			[
+				"less",
+				"Set Syntax: LESS"
+			],
+			[
+				"enab",
+				"Package Control: Enable Package"
+			],
+			[
+				"enabl",
+				"Package Control: Enable Package"
+			]
+		],
+		"width": 579.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/private/tmp/quizify",
+		"/private/tmp/quizify/client/app",
+		"/private/tmp/quizify/e2e/main",
+		"/private/tmp/quizify/server/config/environment"
+	],
+	"file_history":
+	[
+		"/private/tmp/quizify/server/config/local.env.sample.js",
+		"/private/tmp/quizify/Gruntfile.js.old",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/router.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/Gruntfile.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/stores/GameStore.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/actions/QuizifyServerActionCreators.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/pages/CreateGamePage.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/app.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/index.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/routes.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/pages/Home.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/package.json",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/index.html",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/components/Home.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/index.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/app.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/components/QuizifyApp.react.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/components/_buttons.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/_mixins.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/components/_dynamic_background.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/pages/JoinGamePage.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/views/_home_screen.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/styles.css",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/components/SpotifyBackground.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/components/Button.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/index.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/utils/QuizifyWebAPIUtils.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/app.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views/SpotifyBackground.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/dispatcher/QuizifyAppDispatcher.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/flux/constants/QuizifyConstants.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/flux-repo/examples/flux-todomvc/package.json",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/controllers/users-controller.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/users/index/user-block.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/users/index/component.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/main/component.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/users/show/component.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/main/index.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/users/show/index.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/base-view.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/collections/users-collection.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/users/index/index.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/router.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/models/user.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/controllers/UsersController.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/main/component.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/users/show.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/screens/users/index.coffee",
+		"/Users/sijo/.zshrc",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/components/spotify.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/data/spotify_playlists.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/data/common_english_words.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/bundle.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/components/spotify_api_tests.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/components/common_english_words.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/components/spotify_playlists.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/views/_title_screen.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/keys.json.example",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/keys.json",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/quizify.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/README.md",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/.gitignore",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/index.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/components/spotify.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/server/quizify.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/TODO.md",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/dynamic_background.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views/test.cjsx",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/views/_host_screen.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/views/_game_screen.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views/test.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/_variables.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/views/_join_create_screen.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/views/_start_screen.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/views/_join_screen.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/components/_utils.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scss/_styles.scss",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/js/original.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/app.css",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/js/views.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/countdown.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/views.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.coffee.old",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/audio.coffee",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/original.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/app.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/audio.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/index.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/io.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/countdown.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/templates.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/test2.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/test1.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/components/textfit.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/host.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/test.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/public/scripts/player.js",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/.editorconfig",
+		"/Users/sijo/Projects/personal/spotify-quiz/quizify/index.js",
+		"/Users/sijo/Projects/personal/SL-api/package.json",
+		"/Users/sijo/Projects/personal/SL-api/test/fixtures/success/disturbanceInformation.deviations.json",
+		"/Users/sijo/Projects/personal/SL-api/test/test.coffee",
+		"/Users/sijo/Projects/personal/SL-api/example/index.js",
+		"/Users/sijo/Projects/personal/SL-api/lib/services/TrafficSituation.coffee",
+		"/Users/sijo/Projects/personal/SL-api/test/fixtures/success/trafficSituation.json",
+		"/Users/sijo/Projects/personal/SL-api/todo.md",
+		"/Users/sijo/Projects/personal/SL-api/README.md",
+		"/Users/sijo/Projects/personal/SL-api/test/fixtures/success/tripPlanner.trip.json",
+		"/Users/sijo/Projects/personal/SL-api/test/fixtures/success/tripPlanner.journeyDetail.json",
+		"/Users/sijo/Projects/personal/SL-api/example.coffee",
+		"/Users/sijo/Projects/personal/SL-api/lib/services/TripPlanner.coffee",
+		"/Users/sijo/Projects/personal/SL-api/lib/services/Base.coffee",
+		"/Users/sijo/Projects/personal/SL-api/test/fixtures/success/tripPlanner.geometry.json",
+		"/Users/sijo/Projects/personal/SL-api/test/fixtures/success/disturbanceInformation.deviationsRawData.json",
+		"/Users/sijo/Projects/personal/SL-api/lib/services/RealtimeInformation.coffee",
+		"/Users/sijo/Projects/personal/SL-api/lib/request.coffee",
+		"/Users/sijo/Projects/personal/SL-api/lib/services/LocationLookup.coffee",
+		"/Users/sijo/Projects/personal/SL-api/lib/services/DisturbanceInformation.coffee",
+		"/Users/sijo/Projects/personal/SL-api/.npmignore",
+		"/Users/sijo/Projects/personal/SL-api/example/README.md",
+		"/Users/sijo/Projects/personal/SL-api/dist/lib/services/Base.js",
+		"/Users/sijo/Projects/personal/SL-api/example/keys.json",
+		"/Users/sijo/Projects/personal/SL-api/coverage/index.html",
+		"/Users/sijo/Projects/personal/SL-api/coverage/coverage.json"
+	],
+	"find":
+	{
+		"height": 37.0
+	},
+	"find_in_files":
+	{
+		"height": 95.0,
+		"where_history":
+		[
+			"",
+			"*.cjsx",
+			"*.coffee",
+			"",
+			"*.cjsx",
+			"",
+			"*.coffee",
+			"",
+			"*.scss",
+			"",
+			"*.coffee",
+			"",
+			"*.less",
+			"*.js",
+			"",
+			"/Users/sijo/Projects/atlas/ericsson_code/dashboard/src/horizon/.venv",
+			"",
+			"/Users/sijo/Projects/atlas/ericsson_code/icehouse/.venv",
+			"/.venv/",
+			".venv/",
+			"",
+			"*.html",
+			"*.less",
+			"*.html",
+			"-*/.venv/*",
+			"",
+			"-*/.venv/*",
+			"",
+			"*.html",
+			"-*/.venv/*",
+			".venv/-*",
+			"-/.venv/*",
+			"-/.venv",
+			"",
+			"/Users/sijo/Projects/atlas/prototypes/atlas/src/volumes",
+			"/Users/sijo/Projects/atlas/prototypes/atlas/src/**/*",
+			"/Users/sijo/Projects/atlas/prototypes/atlas/src/*",
+			"/Users/sijo/Projects/atlas/prototypes/atlas/src",
+			"",
+			"*.less",
+			"",
+			"*.less",
+			"*.html",
+			"",
+			"*.py",
+			"*.js",
+			"",
+			"*.less",
+			"*.js",
+			"*.less",
+			"*.js",
+			"*.less",
+			"",
+			"*.js",
+			"*.less",
+			"*.js",
+			"",
+			"*.less",
+			"*.html",
+			"",
+			"*.py",
+			"*.html",
+			"*.less",
+			"*.css",
+			"*.html",
+			"*.less",
+			"*.html",
+			"",
+			"*.py",
+			"",
+			"*.less",
+			"*.py",
+			"*.html",
+			"",
+			"*.html",
+			"",
+			"*.less",
+			"*.html",
+			"",
+			"*.less",
+			"*.js",
+			"",
+			".html",
+			"*.less",
+			"",
+			"*.css",
+			"*.less",
+			"",
+			"*.html",
+			".html",
+			"",
+			"*.less",
+			"",
+			"views.py",
+			"views",
+			"",
+			"<open files>",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"lodas",
+			"app.scss",
+			"grunt-browserify",
+			"browserify",
+			"concurrent",
+			"newer",
+			"GOOGLE",
+			"injector",
+			"require(",
+			"hostCreateNewGame",
+			"onCreateClick",
+			"hostCreateNewGame",
+			"newGameCreated",
+			"object-assign",
+			"HostStore",
+			"MessageStore",
+			"ChatConstants",
+			"ChatAppDispatcher",
+			"require(",
+			"(this",
+			"getState",
+			"div",
+			"class",
+			"// ",
+			"import ",
+			"RepoStore",
+			"RepoActionCreators",
+			"Link",
+			"RouteHandler",
+			"user",
+			"*",
+			"require",
+			"from",
+			"import",
+			"default",
+			"initgame",
+			"require(",
+			"var ",
+			";",
+			"require(",
+			"var ",
+			"playerJoinedRoom",
+			"onNewGameCreated",
+			"onConnected",
+			"connectedToSocket",
+			";",
+			"require(",
+			";",
+			"require(",
+			"var ",
+			"index.coffee",
+			"fetch",
+			"react.backbone",
+			"BackboneMixin",
+			"createBackboneClass",
+			"createbackboneclass",
+			"modul",
+			"ReactBackbone",
+			"This may be caused by unintentionally loading two independent copies of React",
+			"This may be caused by unintentionally loading two independent copies of React.",
+			"unintentionally",
+			"unintentionally loading two independent copies of React.",
+			"This may be caused by unintentionally loading two independent copies of React.",
+			"This may be caused by unintentionally loading two independent copies of React",
+			"This may be caused by unintentionally loading two independent copies of React.",
+			"main-container",
+			"element",
+			"main-container",
+			"pageRender",
+			"view",
+			"main-container",
+			"show",
+			"pageRender",
+			"router",
+			"Router",
+			"fetch",
+			"react.render",
+			"this",
+			"react",
+			"MainComponent",
+			"react",
+			"UserShowScreen",
+			"UsersView",
+			"UserShowScreeen",
+			"UsersIndexScreen",
+			"block",
+			"user",
+			"User",
+			"user",
+			"User",
+			"UserShowView",
+			"model",
+			"usersCollection",
+			"UsersCollection",
+			"usersCollection",
+			"require",
+			"this.",
+			"require(",
+			"var ",
+			"require(",
+			"var ",
+			"require(",
+			"var ",
+			"e.",
+			"require(",
+			"var ",
+			"require(",
+			"var ",
+			"require(",
+			"var ",
+			"require(",
+			"var ",
+			"this.",
+			"require(",
+			"var ",
+			"require(",
+			"var ",
+			"var",
+			"this.",
+			"var ",
+			"express:dev",
+			"        ",
+			"express",
+			"var ",
+			"env",
+			"example",
+			".gradient",
+			".background"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"sfVolumeIndicator",
+			"volumes",
+			"url('/static/ericsson/resources"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 6,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Gruntfile.coffee",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9850,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6975,
+								6975
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"_anf_new": "",
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Tomorrow-Night (SL).tmTheme",
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"history_list_is_closing": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4046.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "client/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3429,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3206,
+								3206
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Tomorrow-Night (SL).tmTheme",
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1342.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "client/app/flux/index.cjsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 242,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								242,
+								242
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Tomorrow-Night (SL).tmTheme",
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Better CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "bower.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 99,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								65,
+								65
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Tomorrow-Night (SL).tmTheme",
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "server/config/local.env.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 634,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								556,
+								453
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Tomorrow-Night (SL).tmTheme",
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2851,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								551,
+								551
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Tomorrow-Night (SL).tmTheme",
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "server/components/spotify/index.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"_anf_new": "",
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Tomorrow-Night (SL).tmTheme",
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "TODO.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 596,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Tomorrow-Night (SL).tmTheme",
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 109,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								109,
+								109
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Tomorrow-Night (SL).tmTheme",
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 202.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/node.sublime-build",
+	"project": "quizify.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"pa",
+				"package.json"
+			],
+			[
+				"package.json",
+				"package.json"
+			],
+			[
+				"package",
+				"package.json"
+			],
+			[
+				"grunt",
+				"Gruntfile.js"
+			],
+			[
+				"router",
+				"public/flux/router.coffee"
+			],
+			[
+				"routes",
+				"public/flux/routes.cjsx"
+			],
+			[
+				"index.ht",
+				"public/index.html"
+			],
+			[
+				"home",
+				"public/flux/components/Home.cjsx"
+			],
+			[
+				"index",
+				"public/index.html"
+			],
+			[
+				"index.html",
+				"public/index.html"
+			],
+			[
+				"gun",
+				"Gruntfile.coffee"
+			],
+			[
+				"index.",
+				"server/index.coffee"
+			],
+			[
+				"gunt",
+				"Gruntfile.coffee"
+			],
+			[
+				"inde",
+				"public/index.html"
+			],
+			[
+				"packa",
+				"package.json"
+			],
+			[
+				"base",
+				"public/scripts/base-view.coffee"
+			],
+			[
+				"i",
+				"public/index.html"
+			],
+			[
+				"userblo",
+				"public/scripts/screens/users/index/user-block.cjsx"
+			],
+			[
+				"app",
+				"public/scripts/app.coffee"
+			],
+			[
+				"index.c",
+				"server/index.coffee"
+			],
+			[
+				"spoti",
+				"server/components/spotify.coffee"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"view.co",
+				"public/scripts/views.coffee"
+			],
+			[
+				"pack",
+				"package.json"
+			],
+			[
+				"indet",
+				"public/index.html"
+			],
+			[
+				"index.co",
+				"public/scripts/index.coffee"
+			],
+			[
+				"ignore",
+				".gitignore"
+			],
+			[
+				"git",
+				".gitignore"
+			],
+			[
+				"in",
+				"public/index.html"
+			],
+			[
+				"view",
+				"public/scripts/views.coffee"
+			],
+			[
+				"io",
+				"public/scripts/io.coffee"
+			],
+			[
+				"ap",
+				"public/scripts/app.coffee"
+			],
+			[
+				"quiz",
+				"server/quizify.js"
+			],
+			[
+				"views",
+				"public/scripts/views.coffee"
+			],
+			[
+				"ind",
+				"public/index.html"
+			],
+			[
+				"spot",
+				"server/components/spotify.js"
+			],
+			[
+				"button",
+				"public/scss/components/_buttons.scss"
+			],
+			[
+				"templa",
+				"public/scripts/components/templates.js"
+			],
+			[
+				"example.",
+				"example.coffee"
+			],
+			[
+				"est",
+				"test/test.coffee"
+			],
+			[
+				"test",
+				"test/test.coffee"
+			],
+			[
+				"exa",
+				"example.coffee"
+			],
+			[
+				"reade",
+				"README.md"
+			],
+			[
+				"paka",
+				"package.json"
+			],
+			[
+				"exam",
+				"example.coffee"
+			],
+			[
+				"examp",
+				"example.coffee"
+			],
+			[
+				"localse",
+				"openstack_dashboard/local/local_settings.py"
+			],
+			[
+				"settings",
+				"openstack_dashboard/settings.py"
+			],
+			[
+				"todo",
+				"todo.md"
+			],
+			[
+				"zu",
+				".zuul.yml"
+			],
+			[
+				"zum",
+				".zuul.yml"
+			],
+			[
+				"bower",
+				"bower.json"
+			],
+			[
+				"npmig",
+				".npmignore"
+			],
+			[
+				"packag",
+				"package.json"
+			],
+			[
+				"pac",
+				"package.json"
+			],
+			[
+				"rea",
+				"README.md"
+			],
+			[
+				"pakca",
+				"package.json"
+			],
+			[
+				"ben",
+				"benchmark/benchmark.coffee"
+			],
+			[
+				"benc",
+				"benchmark/benchmark.coffee"
+			],
+			[
+				"req",
+				"src/request.coffee"
+			],
+			[
+				"erre",
+				"src/errors.coffee"
+			],
+			[
+				"error",
+				"src/errors.coffee"
+			],
+			[
+				"ea",
+				"example.coffee"
+			],
+			[
+				"dev.co",
+				"tasks/dev.coffee"
+			],
+			[
+				"coffee",
+				"tasks/options/coffeelint.coffee"
+			],
+			[
+				"coffeee",
+				"tasks/options/coffeelint.coffee"
+			],
+			[
+				"mocha",
+				"tasks/options/mochaTest.coffee"
+			],
+			[
+				"fileco",
+				"tasks/options/file_append.coffee"
+			],
+			[
+				"exco",
+				"tasks/options/express.coffee"
+			],
+			[
+				"concaco",
+				"tasks/options/concat.coffee"
+			],
+			[
+				"coffe",
+				"tasks/options/coffeelint.coffee"
+			],
+			[
+				"clean.co",
+				"tasks/options/clean.coffee"
+			],
+			[
+				"test.js",
+				"tasks/test.js"
+			],
+			[
+				"concat",
+				"tasks/options/concat.js"
+			],
+			[
+				"loda",
+				"lib/scripts/functions/lodash.coffee"
+			],
+			[
+				"alts",
+				"lib/mixins/alts.jade"
+			],
+			[
+				"outr",
+				"lib/outro.jade"
+			],
+			[
+				"brow",
+				"tasks/options/browserify.js"
+			],
+			[
+				"browser",
+				"tasks/options/browserify.js"
+			],
+			[
+				"watch",
+				"tasks/options/watch.js"
+			],
+			[
+				"ugli",
+				"tasks/options/uglify.js"
+			],
+			[
+				"file_append",
+				"tasks/options/file_append.js"
+			],
+			[
+				"dev",
+				"tasks/dev.js"
+			],
+			[
+				"uglif",
+				"tasks/options/uglify.js"
+			],
+			[
+				"wait",
+				"tasks/wait.js"
+			],
+			[
+				"bros",
+				"tasks/options/browserify.js"
+			],
+			[
+				"times",
+				"lib/mixins/times/times.spec.jade"
+			],
+			[
+				"times.",
+				"lib/mixins/times/times.jade"
+			],
+			[
+				"image.ja",
+				"lib/mixins/image/image.jade"
+			],
+			[
+				"brose",
+				"tasks/options/browserify.js"
+			],
+			[
+				"dev.js",
+				"tasks/dev.js"
+			],
+			[
+				"finder",
+				"src/horizon/.venv/lib/python2.7/site-packages/compressor/finders.py"
+			],
+			[
+				"alarm_ini",
+				"openstack_dashboard/static/dashboard/js/alarm_lists/dashboard.alarm_init.js"
+			],
+			[
+				"stylesh",
+				"openstack_dashboard/templates/_stylesheets.html"
+			],
+			[
+				"local",
+				"openstack_dashboard/local/local_settings.py"
+			],
+			[
+				"alarmpoll",
+				"static/dashboard/js/dashboard.alarm_polling.js"
+			],
+			[
+				"horizon/templates/auth/_login.ericsson.html",
+				"horizon/templates/auth/_login.ericsson.html"
+			],
+			[
+				"modal.less",
+				"openstack_dashboard/static/ericsson/less/modals.less"
+			],
+			[
+				"openstack_dashboard/dashboards/project/networks/templates/networks/ports/_detail_overview.html",
+				"openstack_dashboard/dashboards/project/networks/templates/networks/ports/_detail_overview.html"
+			],
+			[
+				"openstack_dashboard/dashboards/admin/networks/templates/networks/ports/_create.html",
+				"openstack_dashboard/dashboards/admin/networks/templates/networks/ports/_create.html"
+			],
+			[
+				"openstack_dashboard/dashboards/admin/networks/templates/networks/ports/_subport.html",
+				"openstack_dashboard/dashboards/admin/networks/templates/networks/ports/_subport.html"
+			],
+			[
+				"color.less",
+				"openstack_dashboard/static/ericsson/less/colors.less"
+			],
+			[
+				"alarmnotific",
+				"openstack_dashboard/static/dashboard/js/alarm_lists/dashboard.alarm_notifications.js"
+			],
+			[
+				"alarms.",
+				"openstack_dashboard/api/alarms.py"
+			],
+			[
+				"history",
+				"static/dashboard/js/alarm_lists/dashboard.alarm_history.js"
+			],
+			[
+				"styleshe",
+				"openstack_dashboard/templates/_stylesheets.html"
+			],
+			[
+				"concurrent/futures/_base.py",
+				".venv/lib/python2.7/site-packages/concurrent/futures/_base.py"
+			],
+			[
+				"login",
+				"horizon/templates/auth/_login.html"
+			],
+			[
+				"alarms",
+				"openstack_dashboard/api/alarms.py"
+			],
+			[
+				"formjs",
+				"horizon/static/horizon/js/horizon.forms.js"
+			],
+			[
+				"datepike.js",
+				"horizon/static/bootstrap/js/bootstrap-datepicker.js"
+			],
+			[
+				"alarmhistory",
+				"openstack_dashboard/static/dashboard/js/alarm_lists/dashboard.alarm_history.js"
+			],
+			[
+				"openstack_dashboard/dashboards/admin/active_alarm_list/tables.py",
+				"openstack_dashboard/dashboards/admin/active_alarm_list/tables.py"
+			],
+			[
+				"headerhtml",
+				"openstack_dashboard/templates/_header.html"
+			],
+			[
+				"form_e",
+				"openstack_dashboard/static/ericsson/less/form_elements.less"
+			],
+			[
+				"_usage_summary.html",
+				"horizon/templates/horizon/common/_usage_summary.html"
+			],
+			[
+				"settings.",
+				"openstack_dashboard/settings.py"
+			],
+			[
+				"10_1543-fcp1305902uen.pa11._.html",
+				"docs/10_1543-FCP1305902Uen.PA11._.html"
+			],
+			[
+				"_scri",
+				"horizon/templates/horizon/_scripts.html"
+			],
+			[
+				"scrip",
+				"horizon/templates/horizon/_scripts.html"
+			],
+			[
+				"script",
+				"horizon/templates/horizon/_scripts.html"
+			],
+			[
+				"sidebarjs",
+				"openstack_dashboard/static/dashboard/js/dashboard.sidebar.js"
+			],
+			[
+				"override",
+				"openstack_dashboard/static/ericsson/less/overrides.less"
+			],
+			[
+				"templates.js",
+				"horizon/static/horizon/js/horizon.templates.js"
+			],
+			[
+				"messages",
+				"horizon/static/horizon/js/horizon.messages.js"
+			],
+			[
+				"messages.js",
+				"horizon/static/horizon/tests/messages.js"
+			],
+			[
+				"scripts",
+				"horizon/templates/horizon/_scripts.html"
+			],
+			[
+				"forms.js",
+				"horizon/static/horizon/js/horizon.forms.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 318.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

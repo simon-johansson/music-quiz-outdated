@@ -1,0 +1,62 @@
+
+.btn {
+  display: inline-block;
+  border-radius: 500px;
+  width: 49%;
+  margin-bottom: 0;
+  color: $spotify-white;
+  font-family: $main-font;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 1.2;
+  text-align: center;
+  background-color: $spotify-green;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  transition: background-color .15s ease;
+
+  &.large {
+    max-width: 300px;
+    height: 100px;
+    @media screen and (max-width: $break-small) {
+      height: 80px;
+      font-size: 30px;
+    }
+  }
+
+  @media screen and (max-width: $break-small) {
+    font-size: 30px;
+  }
+
+  &:focus {
+    outline: thin dotted #333;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: lighten($spotify-green, 15%);
+    text-decoration: none;
+  }
+
+  &:active,
+  .active {
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  }
+
+  &.disable {
+    background-color: $spotify-gray !important;
+  }
+}
+
