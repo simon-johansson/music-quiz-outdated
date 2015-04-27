@@ -12,10 +12,10 @@ onConnect = (socket) ->
   # When the client emits 'info', this listens and executes
   socket.on 'info', (data) ->
     console.info '[%s] %s', socket.address, JSON.stringify(data, null, 2)
-    return
+
   # Insert sockets below
-  require('../api/thing/thing.socket').register socket
-  return
+  require('../api/host').register socket
+
 
 config = require('./environment')
 
@@ -34,13 +34,14 @@ module.exports = (socketio) ->
   #   handshake: true
   # }));
   socketio.on 'connection', (socket) ->
-    socket.address = if socket.handshake.address != null then socket.handshake.address.address + ':' + socket.handshake.address.port else process.env.DOMAIN
-    socket.connectedAt = new Date
+    socket.address = socket.request.connection.remoteAddress
+    socket.connectedAt = new Date()
+
     # Call onDisconnect.
     socket.on 'disconnect', ->
       onDisconnect socket
       console.info '[%s] DISCONNECTED', socket.address
-      return
+
     # Call onConnect.
     onConnect socket
     console.info '[%s] CONNECTED', socket.address

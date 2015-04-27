@@ -20,11 +20,13 @@ module.exports = (grunt) ->
       dist: 'dist'
 
     express:
-      options: port: process.env.PORT or 9000
+      options:
+        port: process.env.PORT or 9000
+        opts: ['node_modules/coffee-script/bin/coffee']
       dev: options:
-        script: 'server/app.js'
+        script: 'server/app.coffee'
         debug: true
-      prod: options: script: 'dist/server/app.js'
+      prod: options: script: 'dist/server/app.coffee'
 
     open: server: url: 'http://localhost:<%= express.options.port %>'
 
@@ -73,7 +75,7 @@ module.exports = (grunt) ->
         ]
         options: livereload: true
       express:
-        files: [ 'server/**/*.{js,json}' ]
+        files: [ 'server/**/*.{js,json,coffee}' ]
         tasks: [
           'express:dev'
           'wait'
@@ -128,7 +130,7 @@ module.exports = (grunt) ->
     'node-inspector': custom: options: 'web-host': 'localhost'
 
     nodemon: debug:
-      script: 'server/app.js'
+      script: 'server/app.coffee'
       options:
         nodeArgs: [ '--debug-brk' ]
         env: PORT: process.env.PORT or 9000

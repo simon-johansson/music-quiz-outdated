@@ -27,5 +27,5 @@ bindSocketEvents = (socket) ->
 module.exports =
 
   init: ->
-    socket = io.connect()
+    socket = io.connect '', {path: '/socket.io-client'}
     bindSocketEvents(socket)

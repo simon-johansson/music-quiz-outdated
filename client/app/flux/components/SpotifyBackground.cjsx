@@ -1,5 +1,7 @@
 # @cjsx React.DOM
 
+$     = require 'jquery'
+_     = require 'lodash'
 React = require 'react/addons'
 TimeoutTransitionGroup = require '../../libs/timeout-transition-group.jsx'
 
@@ -28,7 +30,7 @@ class Tiles extends React.Component
     subset = @props.data.slice 0, @tilesVisibleOnScreen()
     tileNodes = subset.map (track, index) =>
       (
-        <Tile src={track.imageSrc} key={index} ></Tile>
+        <Tile src={track.url} key={index} ></Tile>
       )
     (
       <ul className="album-covers">
@@ -45,8 +47,6 @@ SpotifyBackground = React.createClass
       url: @props.url
       dataType: 'json',
       success: (data) =>
-        data = data.map (e) ->
-          {id: e.track.id, imageSrc: e.track.album.images[1].url}
         @setState { data: _.shuffle data }
         @setState { spinner: _.cloneDeep data }
       error: (xhr, status, err) ->

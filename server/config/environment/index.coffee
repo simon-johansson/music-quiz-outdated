@@ -37,6 +37,10 @@ all =
     clientSecret: process.env.GOOGLE_SECRET or 'secret'
     callbackURL: (process.env.DOMAIN or '') + '/auth/google/callback'
 
+  spotify:
+    clientID: process.env.SPOTIFY_ID or 'id'
+    clientSecret: process.env.SPOTIFY_SECRET or 'secret'
+
 # Export the config object based on the NODE_ENV
 # ==============================================
 

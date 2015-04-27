@@ -9,7 +9,7 @@ QuizifyApp = React.createClass
   render: ->
     (
       <div className="quizify-app">
-        <Background url='/covers' />
+        <Background url='/api/album-covers' />
         <RouteHandler {...this.props} />
       </div>
     )
