@@ -2,6 +2,8 @@
 
 A multi-player, multi-screen music quiz game that uses Spotify APIs. <br>
 
+**WARNING!** Does not work in its current state. The version running on http://quizify.trol.la is the following  [commit](https://github.com/simon-johansson/Quizify/commit/b7fae62d5bddb25a24009b0cf18b4d597d9acbc7).
+
 Built with:
 * [Node.js](https://nodejs.org/) (server)
 * [CoffeeScript](http://coffeescript.org/) (server & client)
