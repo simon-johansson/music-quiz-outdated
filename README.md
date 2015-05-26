@@ -1,4 +1,4 @@
-# Quizify
+# Spotify quiz
 
 A multi-player, multi-screen music quiz game that uses Spotify APIs. <br>
 
@@ -16,9 +16,9 @@ There is *sometimes* a working demo up at http://quizify.trol.la - but no guaran
 ## To install and play locally
 
 1. Ensure Node.js is installed.
-2. `git clone https://github.com/simon-johansson/Quizify.git` to clone this repository.
+2. `git clone https://github.com/simon-johansson/spotify-quiz.git` to clone this repository.
 3. Install the dependences:
-  1. `cd Quizify`
+  1. `cd spotify-quiz`
   2. `npm install`
 5. Setup a [Spotify Dev account](https://developer.spotify.com) and create an applications to get your 'Client ID' and 'Client Secret'.
 6. Rename `keys.json.example` to `keys.json` and fill in the appropriate keys.
